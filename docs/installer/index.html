@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Installer le compteur d'exoplanètes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+<style>
+  :root { --fond:#04060b; --case:#0d1522; --ligne:#1b2636; --cyan:#4fd8ff; --orange:#ff9f43; --vert:#8cff6b; --gris:#8a97a8; --blanc:#eef3f9; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#141518; color:var(--blanc); font-family:'Barlow Condensed', system-ui, sans-serif; font-size:19px; line-height:1.45; }
+  main { max-width:760px; margin:0 auto; padding:28px 18px 48px; }
+  h1 { color:var(--cyan); letter-spacing:.06em; font-size:34px; margin:0 0 6px; }
+  h2 { color:var(--orange); letter-spacing:.08em; font-size:20px; text-transform:uppercase; margin:32px 0 10px; }
+  .intro { color:var(--gris); margin:0 0 24px; }
+  .bloc { background:var(--fond); border:1px solid var(--ligne); border-radius:10px; padding:18px 20px; margin:14px 0; }
+  ol { padding-left:22px; margin:0; } li { margin:8px 0; }
+  .boutons { display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; }
+  .choix { flex:1 1 260px; background:var(--case); border-radius:10px; padding:16px; }
+  .choix strong { color:var(--vert); font-size:21px; }
+  .choix p { color:var(--gris); margin:6px 0 14px; font-size:17px; }
+  esp-web-install-button button[slot="activate"] { font:inherit; font-weight:700; font-size:20px; background:var(--cyan); color:#04060b; border:0; border-radius:8px; padding:12px 20px; cursor:pointer; }
+  .alerte { color:var(--orange); }
+  a { color:var(--cyan); }
+  code { background:var(--case); padding:1px 6px; border-radius:4px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Installer le compteur d'exoplanètes</h1>
+  <p class="intro">Pour l'écran Elecrow CrowPanel Advance 7" (ESP32-S3). L'installation prend une minute et se fait directement depuis cette page.</p>
+
+  <h2>Avant de commencer</h2>
+  <div class="bloc">
+    <ol>
+      <li>Utilise <strong>Chrome</strong> ou <strong>Edge</strong> sur un <strong>ordinateur</strong> (pas sur téléphone, pas avec Firefox ni Safari).</li>
+      <li>Branche l'écran à l'ordinateur avec le câble USB-C fourni.</li>
+      <li>Regarde le numéro de version imprimé sur la carte, au dos de l'écran (par exemple « V1.4 »).</li>
+    </ol>
+  </div>
+
+  <h2>Installer</h2>
+  <div class="boutons">
+    <div class="choix">
+      <strong>Carte V1.3, V1.4 ou V1.5</strong>
+      <p>Le cas le plus courant (cartes vendues actuellement).</p>
+      <esp-web-install-button manifest="manifest-v13.json">
+        <button slot="activate">Installer sur mon écran</button>
+        <span slot="unsupported" class="alerte">Ce navigateur ne permet pas l'installation : utilise Chrome ou Edge sur ordinateur.</span>
+        <span slot="not-allowed" class="alerte">L'installation nécessite une page sécurisée (https).</span>
+      </esp-web-install-button>
+    </div>
+    <div class="choix">
+      <strong>Carte V1.2</strong>
+      <p>Uniquement si « V1.2 » est imprimé sur la carte.</p>
+      <esp-web-install-button manifest="manifest-v12.json">
+        <button slot="activate">Installer sur mon écran</button>
+        <span slot="unsupported" class="alerte">Ce navigateur ne permet pas l'installation : utilise Chrome ou Edge sur ordinateur.</span>
+        <span slot="not-allowed" class="alerte">L'installation nécessite une page sécurisée (https).</span>
+      </esp-web-install-button>
+    </div>
+  </div>
+
+  <div class="bloc">
+    <ol>
+      <li>Clique sur <strong>Installer sur mon écran</strong>, puis choisis le port qui contient <code>CH340</code> ou <code>USB-SERIAL</code> dans la liste.</li>
+      <li>Accepte d'effacer l'écran et lance l'installation. Ne débranche rien tant que ce n'est pas terminé.</li>
+      <li>À la fin, l'écran redémarre et affiche « Bienvenue ! ». Avec ton téléphone, connecte-toi au Wi-Fi <code>Compteur-Exoplanetes</code>, choisis ton Wi-Fi, tape son mot de passe et ta ville, puis enregistre.</li>
+    </ol>
+  </div>
+
+  <h2>En cas de souci</h2>
+  <div class="bloc">
+    <ol>
+      <li><strong>Aucun port dans la liste</strong> : essaie un autre câble ou une autre prise USB. Si rien n'apparaît, installe le pilote CH340 du fabricant WCH, puis recommence.</li>
+      <li><strong>Écran noir après l'installation</strong> : tu as peut-être choisi la mauvaise version de carte. Recommence avec l'autre bouton.</li>
+      <li><strong>Changer de Wi-Fi ou de ville</strong> : appuie 5 secondes sur l'écran, puis choisis « Oui ».</li>
+      <li>Les mises à jour suivantes arrivent toutes seules par Wi-Fi : inutile de revenir sur cette page.</li>
+    </ol>
+  </div>
+
+  <p class="intro">Données : exoplanet.eu (Observatoire de Paris), Launch Library 2 (The Space Devs), JPL Horizons (NASA), Météo-France via Open-Meteo, 7Timer!. <a href="../">Voir les données du jour</a>.</p>
+</main>
+</body>
+</html>

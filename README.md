@@ -8,6 +8,8 @@ Ce dépôt prépare chaque heure le fichier `data.json` lu par l'écran du compt
 
 L'écran n'a besoin d'aucun compte GitHub : il lit simplement l'adresse publique du fichier.
 
+**Installer le programme sur un écran** : https://damienesj38.github.io/Compteur-Exoplanetes/installer/ (Chrome ou Edge sur ordinateur, écran branché en USB). Le code de l'écran est dans le dossier `ecran/`.
+
 ## Mise en route (une seule fois, depuis un ordinateur)
 
 1. **Créer le dépôt.** Sur github.com, bouton **New repository**. Nom : `compteur-exoplanetes`. Visibilité : **Public**. Ne coche rien d'autre, puis **Create repository**.
@@ -15,11 +17,11 @@ L'écran n'a besoin d'aucun compte GitHub : il lit simplement l'adresse publique
    Vérifie ensuite que le dépôt contient bien `.github/workflows/maj-donnees.yml`. Si le dossier `.github` manque (certains navigateurs ignorent les dossiers qui commencent par un point), crée le fichier à la main : **Add file › Create new file**, tape `.github/workflows/maj-donnees.yml` comme nom (les `/` créent les dossiers), colle le contenu du fichier fourni, puis **Commit changes**.
 3. **Activer la page web.** Onglet **Settings**, puis **Pages** dans le menu de gauche. Sous **Build and deployment**, choisis **Source : GitHub Actions**.
 4. **Premier lancement.** Onglet **Actions**. Si GitHub demande d'activer les workflows, accepte. Clique sur **Mise à jour des données**, puis **Run workflow**, puis le bouton vert **Run workflow**. Au bout d'une à deux minutes, une coche verte apparaît.
-5. **Vérifier.** Ouvre `https://damienesj38.github.io/compteur-exoplanetes/` (remplace `damienesj38` si ton identifiant GitHub est différent). Tu dois voir le compteur, le chiffre du jour et le prochain lancement.
+5. **Vérifier.** Ouvre `https://damienesj38.github.io/Compteur-Exoplanetes/` (remplace `damienesj38` si ton identifiant GitHub est différent). Tu dois voir le compteur, le chiffre du jour et le prochain lancement.
 
 Ensuite, tout tourne seul, toutes les heures.
 
-**L'adresse à donner à l'écran** : `https://damienesj38.github.io/compteur-exoplanetes/data.json`
+**L'adresse à donner à l'écran** : `https://damienesj38.github.io/Compteur-Exoplanetes/data.json`
 
 ## Si quelque chose coince
 

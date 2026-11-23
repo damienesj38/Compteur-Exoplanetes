@@ -55,6 +55,11 @@ STATUTS_FR = {
 }
 STATUTS_TERMINES = {"Success", "Failure", "Partial Failure"}
 
+MISSIONS_FR = {
+    "unknown payload": "Charge non communiquée",
+    "unknown": "Mission non communiquée",
+}
+
 LIEUX_COURTS = [
     ("guiana", "Kourou"), ("kourou", "Kourou"),
     ("cape canaveral", "Cap Canaveral"), ("kennedy", "Cap Canaveral"),
@@ -214,6 +219,7 @@ def analyser_lancements(source: str, maintenant: dt.datetime, nombre: int, filtr
         pad = r.get("pad") or {}
         lieu = (pad.get("location") or {}).get("name") or ""
         mission = (r.get("mission") or {}).get("name") or (r.get("name") or "").split("|")[-1].strip()
+        mission = MISSIONS_FR.get(mission.strip().lower(), mission)
         sortie.append({
             "nom": r.get("name") or "",
             "fusee": config.get("name") or "",

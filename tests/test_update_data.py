@@ -61,6 +61,15 @@ class Lancements(unittest.TestCase):
         self.assertEqual([x["operateur"] for x in l], ["SpaceX"])
 
 
+class Traductions(unittest.TestCase):
+    def test_charge_inconnue(self):
+        maintenant = dt.datetime(2026, 11, 22, 20, 8, tzinfo=dt.timezone.utc)
+        donnees = json.loads(lire("lancements.json"))
+        donnees["results"][1]["mission"]["name"] = "Unknown Payload"
+        l = u.analyser_lancements(json.dumps(donnees), maintenant, 5, [])
+        self.assertEqual(l[0]["mission"], "Charge non communiquée")
+
+
 class Horizons(unittest.TestCase):
     def test_lecture(self):
         resultat = json.loads(lire("horizons_voyager1.json"))["result"]
