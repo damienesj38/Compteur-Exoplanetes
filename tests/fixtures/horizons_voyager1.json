@@ -1,0 +1,7 @@
+{
+ "signature": {
+  "source": "NASA/JPL Horizons API",
+  "version": "1.2"
+ },
+ "result": "*******************************************************************************\nEphemeris / API_USER Sun Nov 22 20:00:00 2026 Pasadena, USA      / Horizons\n*******************************************************************************\nTarget body name: Voyager 1 (spacecraft) (-31)    {source: Voyager_1_merged}\nCenter body name: Earth (399)                     {source: DE441}\nCenter-site name: GEOCENTRIC\n*******************************************************************************\nTable cut-offs 2: Solar elongation (  0.0,180.0=NO ),Local Hour Angle( 0.0=NO )\nTable cut-offs 3: RA/DEC angular rate (     0.0=NO )\nTable format    : Comma Separated Values (spreadsheet)\n*******************************************************************************\n Date__(UT)__HR:MN, , ,            delta,     deldot,\n*****************************************************\n$$SOE\n 2026-Nov-22 00:00, , , 173.185823726554, 23.9689287,\n 2026-Nov-23 00:00, , , 173.199548673888, 23.5617460,\n$$EOE\n*****************************************************\n"
+}

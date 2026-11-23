@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compteur d'exoplanètes · données</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --fond:#04060b; --ligne:#1b2636; --cyan:#4fd8ff; --orange:#ff9f43; --violet:#c38bff; --corail:#ff7a5c; --vert:#8cff6b; --gris:#8a97a8; --blanc:#eef3f9; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#141518; color:var(--blanc); font-family:'Barlow Condensed', system-ui, sans-serif; }
+  main { max-width:880px; margin:0 auto; padding:16px; }
+  .ecran { background:var(--fond); border-radius:6px; display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); }
+  .case { padding:18px; border-right:1px solid var(--ligne); border-bottom:1px solid var(--ligne); display:flex; flex-direction:column; gap:6px; min-height:150px; }
+  .etiquette { font-size:14px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+  .gros { font-size:64px; font-weight:700; line-height:1; font-variant-numeric:tabular-nums; }
+  .moyen { font-size:40px; font-weight:700; line-height:1; font-variant-numeric:tabular-nums; }
+  .petit { color:var(--gris); font-size:16px; }
+  .texte { font-size:18px; }
+  ul { list-style:none; margin:0; padding:0; }
+  li { padding:8px 0; border-bottom:1px solid var(--ligne); font-size:17px; }
+  li:last-child { border-bottom:0; }
+  .alerte { color:var(--orange); font-size:15px; }
+  footer { color:var(--gris); font-size:14px; margin-top:12px; line-height:1.5; }
+  a { color:var(--cyan); }
+</style>
+</head>
+<body>
+<main>
+  <div class="ecran">
+    <section class="case" style="grid-column:1/-1">
+      <span class="etiquette" style="color:var(--cyan)" id="libelle">Objets extrasolaires confirmés</span>
+      <span class="gros" id="total" style="color:var(--cyan)">…</span>
+      <span class="petit" id="maj-catalogue"></span>
+      <span class="petit" id="nouvelles"></span>
+    </section>
+    <section class="case">
+      <span class="etiquette" style="color:var(--violet)">Chiffre du jour</span>
+      <span><span class="moyen" id="chiffre-valeur" style="color:var(--violet)">…</span> <span id="chiffre-unite"></span></span>
+      <span class="petit" id="chiffre-legende"></span>
+      <span class="texte" id="chiffre-texte"></span>
+    </section>
+    <section class="case">
+      <span class="etiquette" style="color:var(--corail)">Prochain lancement</span>
+      <span class="moyen" id="compte" style="color:var(--corail)">…</span>
+      <span class="texte" id="lancement-nom"></span>
+      <span class="petit" id="lancement-lieu"></span>
+    </section>
+    <section class="case" style="grid-column:1/-1">
+      <span class="etiquette" style="color:var(--gris)">Lancements suivants</span>
+      <ul id="liste"></ul>
+    </section>
+  </div>
+  <p class="alerte" id="alertes"></p>
+  <footer>
+    Fichier lu par l'écran : <a href="data.json">data.json</a> · mis à jour le <span id="genere"></span><br>
+    Sources : exoplanet.eu (Observatoire de Paris), Launch Library 2 (The Space Devs), JPL Horizons (NASA).
+  </footer>
+</main>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const fr = (n) => n == null ? "–" : n.toLocaleString("fr-FR");
+  const heure = (iso) => new Date(iso).toLocaleString("fr-FR", { weekday: "short", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit", timeZone: "Europe/Paris" });
+  let prochain = null;
+
+  function compteARebours() {
+    if (!prochain) return;
+    let s = Math.max(0, Math.round((new Date(prochain.net) - Date.now()) / 1000));
+    const j = Math.floor(s / 86400); s %= 86400;
+    const h = Math.floor(s / 3600); s %= 3600;
+    const m = Math.floor(s / 60);
+    $("compte").textContent = (j ? j + " j " : "") + String(h).padStart(2, "0") + " h " + String(m).padStart(2, "0");
+  }
+
+  fetch("data.json?" + Date.now()).then((r) => r.json()).then((d) => {
+    const e = d.exoplanetes || {};
+    $("libelle").textContent = e.libelle || "Objets extrasolaires confirmés";
+    $("total").textContent = fr(e.total);
+    $("maj-catalogue").textContent = e.maj_catalogue ? "Catalogue mis à jour le " + new Date(e.maj_catalogue).toLocaleDateString("fr-FR") : "";
+    const n = [];
+    if (e.nouvelles_24h != null) n.push("+" + e.nouvelles_24h + " en 24 h");
+    if (e.nouvelles_7j != null) n.push("+" + e.nouvelles_7j + " en 7 jours");
+    if (e.nouvelles_30j != null) n.push("+" + e.nouvelles_30j + " en 30 jours");
+    $("nouvelles").textContent = n.length ? n.join(" · ") : "Historique en cours de constitution";
+
+    const c = d.chiffre_du_jour;
+    if (c) {
+      $("chiffre-valeur").textContent = c.valeur;
+      $("chiffre-unite").textContent = c.unite;
+      $("chiffre-legende").textContent = c.legende;
+      $("chiffre-texte").textContent = c.texte;
+    }
+
+    const l = d.lancements || [];
+    prochain = l.find((x) => new Date(x.net) > Date.now()) || null;
+    if (prochain) {
+      $("lancement-nom").textContent = prochain.fusee + " · " + prochain.mission;
+      $("lancement-lieu").textContent = prochain.lieu_court + " · " + heure(prochain.net) + " · " + prochain.statut_fr;
+      compteARebours(); setInterval(compteARebours, 30000);
+    } else {
+      $("compte").textContent = "–";
+    }
+    $("liste").innerHTML = "";
+    l.filter((x) => x !== prochain).forEach((x) => {
+      const li = document.createElement("li");
+      li.textContent = heure(x.net) + " · " + x.fusee + " · " + x.mission + " (" + x.lieu_court + ")";
+      $("liste").appendChild(li);
+    });
+
+    $("genere").textContent = d.genere_le ? new Date(d.genere_le).toLocaleString("fr-FR", { timeZone: "Europe/Paris" }) : "?";
+    $("alertes").textContent = (d.alertes || []).length ? "Attention : " + d.alertes.join(" | ") : "";
+  }).catch(() => { $("alertes").textContent = "Impossible de lire data.json"; });
+</script>
+</body>
+</html>

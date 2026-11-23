@@ -1,0 +1,77 @@
+{
+ "version_format": 1,
+ "genere_le": "2026-11-22T20:38:42Z",
+ "exoplanetes": {
+  "total": 8540,
+  "libelle": "Objets extrasolaires confirmés",
+  "maj_catalogue": "2026-11-21",
+  "source": "exoplanet.eu (Observatoire de Paris)",
+  "nouvelles_24h": null,
+  "nouvelles_7j": null,
+  "nouvelles_30j": null,
+  "derniere_variation": null,
+  "historique_30j": [
+   {
+    "date": "2026-11-22",
+    "total": 8540
+   }
+  ]
+ },
+ "chiffre_du_jour": {
+  "date": "2026-11-22",
+  "id": "voyager1_distance",
+  "valeur": "25,9",
+  "unite": "milliards de km",
+  "legende": "Voyager 1 · distance",
+  "texte": "Voyager 1, l'objet humain le plus lointain, est à 25,9 milliards de km de la Terre."
+ },
+ "lancements": [
+  {
+   "nom": "Ariane 64 Block 2 | Amazon Leo (LE-04)",
+   "fusee": "Ariane 64",
+   "fusee_complete": "Ariane 64 Block 2",
+   "mission": "Amazon Leo (LE-04)",
+   "operateur": "Arianespace",
+   "net": "2026-11-23T11:09:00Z",
+   "statut": "Go",
+   "statut_fr": "Feu vert",
+   "pas_de_tir": "Ariane Launch Area 4",
+   "lieu": "Guiana Space Centre, French Guiana",
+   "lieu_court": "Kourou",
+   "pays": "GUF"
+  },
+  {
+   "nom": "Soyuz 2.1b | Progress MS-36 (97P)",
+   "fusee": "Soyuz 2.1b",
+   "fusee_complete": "Soyuz 2.1b",
+   "mission": "Progress MS-36 (97P)",
+   "operateur": "Roscosmos",
+   "net": "2026-11-24T10:13:00Z",
+   "statut": "TBC",
+   "statut_fr": "À confirmer",
+   "pas_de_tir": "31/6",
+   "lieu": "Baikonur Cosmodrome, Republic of Kazakhstan",
+   "lieu_court": "Baïkonour",
+   "pays": "KAZ"
+  },
+  {
+   "nom": "Falcon 9 Block 5 | USSF-266",
+   "fusee": "Falcon 9",
+   "fusee_complete": "Falcon 9 Block 5",
+   "mission": "USSF-266",
+   "operateur": "SpaceX",
+   "net": "2026-11-24T15:55:00Z",
+   "statut": "Go",
+   "statut_fr": "Feu vert",
+   "pas_de_tir": "Space Launch Complex 4E",
+   "lieu": "Vandenberg SFB, CA, USA",
+   "lieu_court": "Vandenberg",
+   "pays": "USA"
+  }
+ ],
+ "firmware": {
+  "version": "0.0.0",
+  "url": ""
+ },
+ "alertes": []
+}

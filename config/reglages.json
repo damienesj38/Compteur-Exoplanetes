@@ -1,0 +1,18 @@
+{
+  "fuseau": "Europe/Paris",
+  "compteur": {
+    "libelle": "Objets extrasolaires confirmés"
+  },
+  "lancements": {
+    "nombre": 5,
+    "operateurs_filtre": []
+  },
+  "chiffre_du_jour": {
+    "ecart_minimum_jours": 40,
+    "commencer_par": ["voyager1_distance"]
+  },
+  "firmware": {
+    "version": "0.0.0",
+    "url": ""
+  }
+}
