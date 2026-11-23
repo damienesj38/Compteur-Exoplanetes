@@ -1,9 +1,9 @@
 {
  "historique": {
-  "2026-11-23": 8540
+  "2026-11-23": 8542
  },
- "dernier_total": 8540,
- "date_catalogue": "2026-11-21",
+ "dernier_total": 8542,
+ "date_catalogue": "2026-11-23",
  "source_compteur": "compteur",
  "lancements_cache": [
   {
@@ -66,7 +66,7 @@
    "nom": "Long March 2D | Unknown Payload",
    "fusee": "Long March 2D",
    "fusee_complete": "Long March 2D",
-   "mission": "Unknown Payload",
+   "mission": "Charge non communiquée",
    "operateur": "China Aerospace Science and Technology Corporation",
    "net": "2026-11-26T09:35:00Z",
    "statut": "Go",
@@ -87,5 +87,11 @@
   "unite": "milliards de km",
   "legende": "Voyager 1 · distance",
   "texte": "Voyager 1, l'objet humain le plus lointain, est à 25,9 milliards de km de la Terre."
+ },
+ "derniere_variation": {
+  "le": "2026-11-23T09:33:32Z",
+  "de": 8540,
+  "a": 8542,
+  "nombre": 2
  }
 }

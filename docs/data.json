@@ -1,19 +1,24 @@
 {
  "version_format": 1,
- "genere_le": "2026-11-23T07:58:11Z",
+ "genere_le": "2026-11-23T09:33:32Z",
  "exoplanetes": {
-  "total": 8540,
+  "total": 8542,
   "libelle": "Objets extrasolaires confirmés",
-  "maj_catalogue": "2026-11-21",
+  "maj_catalogue": "2026-11-23",
   "source": "exoplanet.eu (Observatoire de Paris)",
   "nouvelles_24h": null,
   "nouvelles_7j": null,
   "nouvelles_30j": null,
-  "derniere_variation": null,
+  "derniere_variation": {
+   "le": "2026-11-23T09:33:32Z",
+   "de": 8540,
+   "a": 8542,
+   "nombre": 2
+  },
   "historique_30j": [
    {
     "date": "2026-11-23",
-    "total": 8540
+    "total": 8542
    }
   ]
  },
@@ -86,7 +91,7 @@
    "nom": "Long March 2D | Unknown Payload",
    "fusee": "Long March 2D",
    "fusee_complete": "Long March 2D",
-   "mission": "Unknown Payload",
+   "mission": "Charge non communiquée",
    "operateur": "China Aerospace Science and Technology Corporation",
    "net": "2026-11-26T09:35:00Z",
    "statut": "Go",
@@ -98,8 +103,8 @@
   }
  ],
  "firmware": {
-  "version": "0.0.0",
-  "url": ""
+  "version": "1.0.0",
+  "url": "https://damienesj38.github.io/Compteur-Exoplanetes/firmware/compteur-{rev}.bin"
  },
  "alertes": []
 }
