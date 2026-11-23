@@ -1,0 +1,55 @@
+name: Mise à jour des données
+
+on:
+  schedule:
+    - cron: "17 * * * *"   # toutes les heures, à la 17e minute (heure UTC)
+  workflow_dispatch:         # bouton "Run workflow" pour lancer à la main
+
+permissions:
+  contents: write   # enregistrer l'historique dans le dépôt
+  pages: write      # publier sur GitHub Pages
+  id-token: write
+
+concurrency:
+  group: maj-donnees
+  cancel-in-progress: false
+
+jobs:
+  maj:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v6
+
+      - name: Tests
+        run: python3 -m unittest discover tests
+
+      - name: Récupérer les données
+        run: python3 scripts/update_data.py
+
+      - name: Enregistrer l'historique
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data docs
+          if git diff --cached --quiet; then
+            echo "Rien de nouveau à enregistrer"
+          else
+            git commit -m "Données du $(date -u +'%Y-%m-%d %H:%M') UTC"
+            git push
+          fi
+
+      - name: Préparer Pages
+        uses: actions/configure-pages@v6
+
+      - name: Envoyer le dossier docs
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: docs
+
+      - name: Publier
+        id: deploiement
+        uses: actions/deploy-pages@v5
