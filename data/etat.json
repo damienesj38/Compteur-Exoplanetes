@@ -1,8 +1,8 @@
 {
  "historique": {
-  "2026-11-23": 8542
+  "2026-11-23": 8546
  },
- "dernier_total": 8542,
+ "dernier_total": 8546,
  "date_catalogue": "2026-11-23",
  "source_compteur": "compteur",
  "lancements_cache": [
@@ -26,9 +26,9 @@
    "fusee_complete": "Ariane 64 Block 2",
    "mission": "Amazon Leo (LE-04)",
    "operateur": "Arianespace",
-   "net": "2026-11-24T11:09:00Z",
-   "statut": "TBC",
-   "statut_fr": "À confirmer",
+   "net": "2026-11-24T10:45:00Z",
+   "statut": "Go",
+   "statut_fr": "Feu vert",
    "pas_de_tir": "Ariane Launch Area 4",
    "lieu": "Guiana Space Centre, French Guiana",
    "lieu_court": "Kourou",
@@ -89,9 +89,9 @@
   "texte": "Voyager 1, l'objet humain le plus lointain, est à 25,9 milliards de km de la Terre."
  },
  "derniere_variation": {
-  "le": "2026-11-23T09:33:32Z",
-  "de": 8540,
-  "a": 8542,
-  "nombre": 2
+  "le": "2026-11-23T20:14:46Z",
+  "de": 8542,
+  "a": 8546,
+  "nombre": 4
  }
 }

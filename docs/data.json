@@ -1,8 +1,8 @@
 {
  "version_format": 1,
- "genere_le": "2026-11-23T09:33:32Z",
+ "genere_le": "2026-11-23T20:14:46Z",
  "exoplanetes": {
-  "total": 8542,
+  "total": 8546,
   "libelle": "Objets extrasolaires confirmés",
   "maj_catalogue": "2026-11-23",
   "source": "exoplanet.eu (Observatoire de Paris)",
@@ -10,15 +10,15 @@
   "nouvelles_7j": null,
   "nouvelles_30j": null,
   "derniere_variation": {
-   "le": "2026-11-23T09:33:32Z",
-   "de": 8540,
-   "a": 8542,
-   "nombre": 2
+   "le": "2026-11-23T20:14:46Z",
+   "de": 8542,
+   "a": 8546,
+   "nombre": 4
   },
   "historique_30j": [
    {
     "date": "2026-11-23",
-    "total": 8542
+    "total": 8546
    }
   ]
  },
@@ -51,9 +51,9 @@
    "fusee_complete": "Ariane 64 Block 2",
    "mission": "Amazon Leo (LE-04)",
    "operateur": "Arianespace",
-   "net": "2026-11-24T11:09:00Z",
-   "statut": "TBC",
-   "statut_fr": "À confirmer",
+   "net": "2026-11-24T10:45:00Z",
+   "statut": "Go",
+   "statut_fr": "Feu vert",
    "pas_de_tir": "Ariane Launch Area 4",
    "lieu": "Guiana Space Centre, French Guiana",
    "lieu_court": "Kourou",
