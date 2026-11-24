@@ -1,9 +1,10 @@
 {
  "historique": {
-  "2026-11-23": 8546
+  "2026-11-23": 8546,
+  "2026-11-24": 8547
  },
- "dernier_total": 8546,
- "date_catalogue": "2026-11-23",
+ "dernier_total": 8547,
+ "date_catalogue": "2026-11-24",
  "source_compteur": "compteur",
  "lancements_cache": [
   {
@@ -12,7 +13,7 @@
    "fusee_complete": "Soyuz 2.1b",
    "mission": "Progress MS-36 (97P)",
    "operateur": "Russian Federal Space Agency (ROSCOSMOS)",
-   "net": "2026-11-24T10:13:00Z",
+   "net": "2026-11-24T10:17:00Z",
    "statut": "TBC",
    "statut_fr": "À confirmer",
    "pas_de_tir": "31/6",
@@ -40,7 +41,7 @@
    "fusee_complete": "Falcon 9 Block 5",
    "mission": "USSF-266",
    "operateur": "SpaceX",
-   "net": "2026-11-24T15:55:00Z",
+   "net": "2026-11-24T16:08:59Z",
    "statut": "Go",
    "statut_fr": "Feu vert",
    "pas_de_tir": "Space Launch Complex 4E",
@@ -78,20 +79,21 @@
   }
  ],
  "chiffres_vus": {
-  "voyager1_distance": "2026-11-23"
+  "voyager1_distance": "2026-11-23",
+  "jours_gagarine": "2026-11-24"
  },
  "chiffre_courant": {
-  "date": "2026-11-23",
-  "id": "voyager1_distance",
-  "valeur": "25,9",
-  "unite": "milliards de km",
-  "legende": "Voyager 1 · distance",
-  "texte": "Voyager 1, l'objet humain le plus lointain, est à 25,9 milliards de km de la Terre."
+  "date": "2026-11-24",
+  "id": "jours_gagarine",
+  "valeur": "23 967",
+  "unite": "jours",
+  "legende": "jours depuis Gagarine",
+  "texte": "23 967 jours depuis le vol de Youri Gagarine, premier humain dans l'espace."
  },
  "derniere_variation": {
-  "le": "2026-11-23T20:14:46Z",
-  "de": 8542,
-  "a": 8546,
-  "nombre": 4
+  "le": "2026-11-24T04:49:23Z",
+  "de": 8546,
+  "a": 8547,
+  "nombre": 1
  }
 }
