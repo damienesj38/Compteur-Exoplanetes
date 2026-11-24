@@ -1,19 +1,19 @@
 {
  "version_format": 1,
- "genere_le": "2026-11-24T04:49:23Z",
+ "genere_le": "2026-11-24T15:54:23Z",
  "exoplanetes": {
-  "total": 8547,
+  "total": 8570,
   "libelle": "Objets extrasolaires confirmés",
   "maj_catalogue": "2026-11-24",
   "source": "exoplanet.eu (Observatoire de Paris)",
-  "nouvelles_24h": 1,
+  "nouvelles_24h": 24,
   "nouvelles_7j": null,
   "nouvelles_30j": null,
   "derniere_variation": {
-   "le": "2026-11-24T04:49:23Z",
-   "de": 8546,
-   "a": 8547,
-   "nombre": 1
+   "le": "2026-11-24T15:54:23Z",
+   "de": 8547,
+   "a": 8570,
+   "nombre": 23
   },
   "historique_30j": [
    {
@@ -22,7 +22,7 @@
    },
    {
     "date": "2026-11-24",
-    "total": 8547
+    "total": 8570
    }
   ]
  },
@@ -35,34 +35,6 @@
   "texte": "23 967 jours depuis le vol de Youri Gagarine, premier humain dans l'espace."
  },
  "lancements": [
-  {
-   "nom": "Soyuz 2.1b | Progress MS-36 (97P)",
-   "fusee": "Soyuz 2.1b",
-   "fusee_complete": "Soyuz 2.1b",
-   "mission": "Progress MS-36 (97P)",
-   "operateur": "Russian Federal Space Agency (ROSCOSMOS)",
-   "net": "2026-11-24T10:17:00Z",
-   "statut": "TBC",
-   "statut_fr": "À confirmer",
-   "pas_de_tir": "31/6",
-   "lieu": "Baikonur Cosmodrome, Republic of Kazakhstan",
-   "lieu_court": "Baïkonour",
-   "pays": "KAZ"
-  },
-  {
-   "nom": "Ariane 64 Block 2 | Amazon Leo (LE-04)",
-   "fusee": "Ariane 64",
-   "fusee_complete": "Ariane 64 Block 2",
-   "mission": "Amazon Leo (LE-04)",
-   "operateur": "Arianespace",
-   "net": "2026-11-24T10:45:00Z",
-   "statut": "Go",
-   "statut_fr": "Feu vert",
-   "pas_de_tir": "Ariane Launch Area 4",
-   "lieu": "Guiana Space Centre, French Guiana",
-   "lieu_court": "Kourou",
-   "pays": "GUF"
-  },
   {
    "nom": "Falcon 9 Block 5 | USSF-266",
    "fusee": "Falcon 9",
@@ -103,6 +75,34 @@
    "pas_de_tir": "Launch Complex 3 (LC-3/LA-1)",
    "lieu": "Xichang Satellite Launch Center, People's Republic of China",
    "lieu_court": "Xichang",
+   "pays": "CHN"
+  },
+  {
+   "nom": "Electron | Night Owls Never Sleep (StriX Launch 14)",
+   "fusee": "Electron",
+   "fusee_complete": "Electron",
+   "mission": "Night Owls Never Sleep (StriX Launch 14)",
+   "operateur": "Rocket Lab",
+   "net": "2026-11-27T00:05:00Z",
+   "statut": "Go",
+   "statut_fr": "Feu vert",
+   "pas_de_tir": "Unknown Pad",
+   "lieu": "Rocket Lab Launch Complex 1, Mahia Peninsula, New Zealand",
+   "lieu_court": "Mahia (N.-Z.)",
+   "pays": "NZL"
+  },
+  {
+   "nom": "Long March 6A | Unknown Payload",
+   "fusee": "Long March 6A",
+   "fusee_complete": "Long March 6A",
+   "mission": "Charge non communiquée",
+   "operateur": "China Aerospace Science and Technology Corporation",
+   "net": "2026-11-27T13:00:00Z",
+   "statut": "Go",
+   "statut_fr": "Feu vert",
+   "pas_de_tir": "Launch Complex 9A",
+   "lieu": "Taiyuan Satellite Launch Center, People's Republic of China",
+   "lieu_court": "Taiyuan",
    "pays": "CHN"
   }
  ],
