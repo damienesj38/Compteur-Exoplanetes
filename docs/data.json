@@ -1,19 +1,19 @@
 {
  "version_format": 1,
- "genere_le": "2026-11-25T09:51:54Z",
+ "genere_le": "2026-11-25T19:57:01Z",
  "exoplanetes": {
-  "total": 8589,
+  "total": 8603,
   "libelle": "Objets extrasolaires confirmés",
   "maj_catalogue": "2026-11-25",
   "source": "exoplanet.eu (Observatoire de Paris)",
-  "nouvelles_24h": 19,
+  "nouvelles_24h": 33,
   "nouvelles_7j": null,
   "nouvelles_30j": null,
   "derniere_variation": {
-   "le": "2026-11-25T00:45:02Z",
-   "de": 8570,
-   "a": 8589,
-   "nombre": 19
+   "le": "2026-11-25T19:57:01Z",
+   "de": 8589,
+   "a": 8603,
+   "nombre": 14
   },
   "historique_30j": [
    {
@@ -26,7 +26,7 @@
    },
    {
     "date": "2026-11-25",
-    "total": 8589
+    "total": 8603
    }
   ]
  },

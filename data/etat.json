@@ -2,9 +2,9 @@
  "historique": {
   "2026-11-23": 8546,
   "2026-11-24": 8570,
-  "2026-11-25": 8589
+  "2026-11-25": 8603
  },
- "dernier_total": 8589,
+ "dernier_total": 8603,
  "date_catalogue": "2026-11-25",
  "source_compteur": "compteur",
  "lancements_cache": [
@@ -93,9 +93,9 @@
   "texte": "4 396 jours depuis l'atterrissage de Philae sur la comète Tchouri."
  },
  "derniere_variation": {
-  "le": "2026-11-25T00:45:02Z",
-  "de": 8570,
-  "a": 8589,
-  "nombre": 19
+  "le": "2026-11-25T19:57:01Z",
+  "de": 8589,
+  "a": 8603,
+  "nombre": 14
  }
 }
