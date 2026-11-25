@@ -1,19 +1,19 @@
 {
  "version_format": 1,
- "genere_le": "2026-11-24T15:54:23Z",
+ "genere_le": "2026-11-25T00:45:02Z",
  "exoplanetes": {
-  "total": 8570,
+  "total": 8589,
   "libelle": "Objets extrasolaires confirmés",
   "maj_catalogue": "2026-11-24",
   "source": "exoplanet.eu (Observatoire de Paris)",
-  "nouvelles_24h": 24,
+  "nouvelles_24h": 19,
   "nouvelles_7j": null,
   "nouvelles_30j": null,
   "derniere_variation": {
-   "le": "2026-11-24T15:54:23Z",
-   "de": 8547,
-   "a": 8570,
-   "nombre": 23
+   "le": "2026-11-25T00:45:02Z",
+   "de": 8570,
+   "a": 8589,
+   "nombre": 19
   },
   "historique_30j": [
    {
@@ -23,46 +23,22 @@
    {
     "date": "2026-11-24",
     "total": 8570
+   },
+   {
+    "date": "2026-11-25",
+    "total": 8589
    }
   ]
  },
  "chiffre_du_jour": {
-  "date": "2026-11-24",
-  "id": "jours_gagarine",
-  "valeur": "23 967",
+  "date": "2026-11-25",
+  "id": "jours_philae",
+  "valeur": "4 396",
   "unite": "jours",
-  "legende": "jours depuis Gagarine",
-  "texte": "23 967 jours depuis le vol de Youri Gagarine, premier humain dans l'espace."
+  "legende": "jours depuis Philae",
+  "texte": "4 396 jours depuis l'atterrissage de Philae sur la comète Tchouri."
  },
  "lancements": [
-  {
-   "nom": "Falcon 9 Block 5 | USSF-266",
-   "fusee": "Falcon 9",
-   "fusee_complete": "Falcon 9 Block 5",
-   "mission": "USSF-266",
-   "operateur": "SpaceX",
-   "net": "2026-11-24T16:08:59Z",
-   "statut": "Go",
-   "statut_fr": "Feu vert",
-   "pas_de_tir": "Space Launch Complex 4E",
-   "lieu": "Vandenberg SFB, CA, USA",
-   "lieu_court": "Vandenberg",
-   "pays": "USA"
-  },
-  {
-   "nom": "Long March 2F/G | Shenzhou 24",
-   "fusee": "Long March 2F/G",
-   "fusee_complete": "Long March 2F/G",
-   "mission": "Shenzhou 24",
-   "operateur": "China Aerospace Science and Technology Corporation",
-   "net": "2026-11-25T00:18:00Z",
-   "statut": "Go",
-   "statut_fr": "Feu vert",
-   "pas_de_tir": "Launch Area 91 (SLS-1 / 921)",
-   "lieu": "Jiuquan Satellite Launch Center, People's Republic of China",
-   "lieu_court": "Jiuquan",
-   "pays": "CHN"
-  },
   {
    "nom": "Long March 2D | Unknown Payload",
    "fusee": "Long March 2D",
@@ -104,6 +80,34 @@
    "lieu": "Taiyuan Satellite Launch Center, People's Republic of China",
    "lieu_court": "Taiyuan",
    "pays": "CHN"
+  },
+  {
+   "nom": "Long March 6C | Unknown Payload",
+   "fusee": "Long March 6C",
+   "fusee_complete": "Long March 6C",
+   "mission": "Charge non communiquée",
+   "operateur": "China Aerospace Science and Technology Corporation",
+   "net": "2026-11-29T03:50:00Z",
+   "statut": "Go",
+   "statut_fr": "Feu vert",
+   "pas_de_tir": "Launch Complex 9A",
+   "lieu": "Taiyuan Satellite Launch Center, People's Republic of China",
+   "lieu_court": "Taiyuan",
+   "pays": "CHN"
+  },
+  {
+   "nom": "Falcon 9 Block 5 | USSF-380",
+   "fusee": "Falcon 9",
+   "fusee_complete": "Falcon 9 Block 5",
+   "mission": "USSF-380",
+   "operateur": "SpaceX",
+   "net": "2026-11-29T04:39:00Z",
+   "statut": "Go",
+   "statut_fr": "Feu vert",
+   "pas_de_tir": "Space Launch Complex 4E",
+   "lieu": "Vandenberg SFB, CA, USA",
+   "lieu_court": "Vandenberg",
+   "pays": "USA"
   }
  ],
  "firmware": {
