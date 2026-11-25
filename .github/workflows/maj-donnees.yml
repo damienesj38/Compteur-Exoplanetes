@@ -17,9 +17,6 @@ concurrency:
 jobs:
   maj:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deploiement.outputs.page_url }}
     steps:
       - name: Récupérer le dépôt
         uses: actions/checkout@v6
@@ -50,6 +47,13 @@ jobs:
         with:
           path: docs
 
+  publier:
+    needs: maj
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploiement.outputs.page_url }}
+    steps:
       - name: Publier
         id: deploiement
         uses: actions/deploy-pages@v5
