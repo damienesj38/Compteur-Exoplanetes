@@ -1,12 +1,12 @@
 {
  "version_format": 1,
- "genere_le": "2026-11-25T19:57:01Z",
+ "genere_le": "2026-11-26T02:52:20Z",
  "exoplanetes": {
   "total": 8603,
   "libelle": "Objets extrasolaires confirmés",
   "maj_catalogue": "2026-11-25",
   "source": "exoplanet.eu (Observatoire de Paris)",
-  "nouvelles_24h": 33,
+  "nouvelles_24h": 0,
   "nouvelles_7j": null,
   "nouvelles_30j": null,
   "derniere_variation": {
@@ -27,16 +27,20 @@
    {
     "date": "2026-11-25",
     "total": 8603
+   },
+   {
+    "date": "2026-11-26",
+    "total": 8603
    }
   ]
  },
  "chiffre_du_jour": {
-  "date": "2026-11-25",
-  "id": "jours_philae",
-  "valeur": "4 396",
-  "unite": "jours",
-  "legende": "jours depuis Philae",
-  "texte": "4 396 jours depuis l'atterrissage de Philae sur la comète Tchouri."
+  "date": "2026-11-26",
+  "id": "clipper_distance",
+  "valeur": "7,9",
+  "unite": "millions de km",
+  "legende": "Europa Clipper · distance",
+  "texte": "Europa Clipper, en route vers Jupiter, est à 7,9 millions de km de la Terre."
  },
  "lancements": [
   {
@@ -62,7 +66,7 @@
    "net": "2026-11-27T00:05:00Z",
    "statut": "Go",
    "statut_fr": "Feu vert",
-   "pas_de_tir": "Unknown Pad",
+   "pas_de_tir": "Rocket Lab Launch Complex 1B",
    "lieu": "Rocket Lab Launch Complex 1, Mahia Peninsula, New Zealand",
    "lieu_court": "Mahia (N.-Z.)",
    "pays": "NZL"
