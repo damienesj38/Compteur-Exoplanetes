@@ -4,26 +4,12 @@
   "2026-11-24": 8570,
   "2026-11-25": 8603,
   "2026-11-26": 8665,
-  "2026-11-27": 8718
+  "2026-11-27": 8739
  },
- "dernier_total": 8718,
+ "dernier_total": 8739,
  "date_catalogue": "2026-11-27",
  "source_compteur": "compteur",
  "lancements_cache": [
-  {
-   "nom": "Long March 6A | Unknown Payload",
-   "fusee": "Long March 6A",
-   "fusee_complete": "Long March 6A",
-   "mission": "Charge non communiquée",
-   "operateur": "China Aerospace Science and Technology Corporation",
-   "net": "2026-11-27T13:00:00Z",
-   "statut": "Go",
-   "statut_fr": "Feu vert",
-   "pas_de_tir": "Launch Complex 9A",
-   "lieu": "Taiyuan Satellite Launch Center, People's Republic of China",
-   "lieu_court": "Taiyuan",
-   "pays": "CHN"
-  },
   {
    "nom": "Long March 6C | Unknown Payload",
    "fusee": "Long March 6C",
@@ -67,18 +53,32 @@
    "pays": "USA"
   },
   {
-   "nom": "Mir | Demo Flight",
-   "fusee": "Mir",
-   "fusee_complete": "Mir",
-   "mission": "Demo Flight",
-   "operateur": "Agency for Defense Development",
-   "net": "2026-11-30T00:00:00Z",
-   "statut": "TBD",
-   "statut_fr": "Date à confirmer",
-   "pas_de_tir": "ADD Offshore launch platform",
-   "lieu": "Sea Launch",
-   "lieu_court": "Sea Launch",
-   "pays": "???"
+   "nom": "Kinetica 1 | Unknown Payload",
+   "fusee": "Kinetica 1",
+   "fusee_complete": "Kinetica 1",
+   "mission": "Charge non communiquée",
+   "operateur": "CAS Space",
+   "net": "2026-12-01T01:45:00Z",
+   "statut": "Go",
+   "statut_fr": "Feu vert",
+   "pas_de_tir": "South China Sea (launch location 4)",
+   "lieu": "Haiyang Oriental Spaceport",
+   "lieu_court": "Haiyang Oriental Spaceport",
+   "pays": "CHN"
+  },
+  {
+   "nom": "Kuaizhou 11 | Unknown Payload",
+   "fusee": "Kuaizhou 11",
+   "fusee_complete": "Kuaizhou 11",
+   "mission": "Charge non communiquée",
+   "operateur": "ExPace",
+   "net": "2026-12-02T11:55:00Z",
+   "statut": "Go",
+   "statut_fr": "Feu vert",
+   "pas_de_tir": "Launch Area 95A",
+   "lieu": "Jiuquan Satellite Launch Center, People's Republic of China",
+   "lieu_court": "Jiuquan",
+   "pays": "CHN"
   }
  ],
  "chiffres_vus": {
@@ -97,9 +97,9 @@
   "texte": "1 798 jours depuis le lancement du télescope James Webb."
  },
  "derniere_variation": {
-  "le": "2026-11-27T05:03:51Z",
-  "de": 8665,
-  "a": 8718,
-  "nombre": 53
+  "le": "2026-11-27T15:06:10Z",
+  "de": 8718,
+  "a": 8739,
+  "nombre": 21
  }
 }
