@@ -4,10 +4,11 @@
   "2026-11-24": 8570,
   "2026-11-25": 8603,
   "2026-11-26": 8665,
-  "2026-11-27": 8739
+  "2026-11-27": 8739,
+  "2026-11-28": 8739
  },
  "dernier_total": 8739,
- "date_catalogue": "2026-11-27",
+ "date_catalogue": "2026-11-28",
  "source_compteur": "compteur",
  "lancements_cache": [
   {
@@ -86,15 +87,16 @@
   "jours_gagarine": "2026-11-24",
   "jours_philae": "2026-11-25",
   "clipper_distance": "2026-11-26",
-  "jours_jwst": "2026-11-27"
+  "jours_jwst": "2026-11-27",
+  "mars_distance": "2026-11-28"
  },
  "chiffre_courant": {
-  "date": "2026-11-27",
-  "id": "jours_jwst",
-  "valeur": "1 798",
-  "unite": "jours",
-  "legende": "jours depuis James Webb",
-  "texte": "1 798 jours depuis le lancement du télescope James Webb."
+  "date": "2026-11-28",
+  "id": "mars_distance",
+  "valeur": "180",
+  "unite": "millions de km",
+  "legende": "Mars · distance",
+  "texte": "Mars est à 180 millions de km de la Terre aujourd'hui."
  },
  "derniere_variation": {
   "le": "2026-11-27T15:06:10Z",
