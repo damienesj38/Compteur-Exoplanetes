@@ -122,7 +122,20 @@ class ChiffreDuJour(unittest.TestCase):
         for item in self.items:
             c = u.calculer_chiffre(item, dt.date(2026, 11, 23), 8540)
             self.assertNotIn("{", c["texte"], item["id"])
-            self.assertLessEqual(len(c["legende"]), 32, item["id"])
+            self.assertLessEqual(len(c["legende"]), 56, item["id"])  # 2 lignes à l'écran
+
+    def test_valeurs_affichables_en_segments(self):
+        import re
+        for item in self.items:
+            c = u.calculer_chiffre(item, dt.date(2026, 11, 23), 8540)
+            self.assertRegex(c["valeur"], r"^[0-9 ,.:+\-]+$", item["id"])
+            self.assertLessEqual(len(c["valeur"]), 8, item["id"])
+
+    def test_type_fixe(self):
+        item = {"id": "x", "type": "fixe", "valeur": "8:20", "unite": "min:s",
+                "legende": "Lumière du Soleil", "texte": "8 minutes et 20 secondes."}
+        c = u.calculer_chiffre(item, dt.date(2026, 11, 23), None)
+        self.assertEqual((c["valeur"], c["unite"], c["texte"]), ("8:20", "min:s", "8 minutes et 20 secondes."))
 
 
 if __name__ == "__main__":

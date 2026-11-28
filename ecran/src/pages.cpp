@@ -193,7 +193,7 @@ void pageAccueil(Canevas& c, const DonneesCompteur& d, const Meteo& m, const Reg
         segments(c, d.chiffreValeur, 18, 378 + (50 - ch), cw, ch, ce, coul::VIOLET);
         int ux = 18 + largeur + 10;
         texteMultiligne(c, d.chiffreUnite, ux, 394, 212 - ux, S16, 0xE9DCFF, 17, 2);
-        texteLimite(c, d.chiffreLegende, 18, 442, 194, S14, coul::GRIS);
+        texteMultiligne(c, d.chiffreLegende, 18, 438, 194, S14, coul::GRIS, 16, 2);  // 2 lignes depuis 1.0.5
     }
 
     // --- Heure, date, ville

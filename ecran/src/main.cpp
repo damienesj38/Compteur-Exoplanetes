@@ -322,7 +322,7 @@ void setup() {
     panel_mcu::begin();
     initPolices();
     prefs.begin("compteur", false);
-    const int reglageAffichage = prefs.getInt("affichage", 0) % nombreReglagesAffichage();
+    const int reglageAffichage = prefs.getInt("affichage2", 0) % nombreReglagesAffichage();
     if (!initEcran(reglageAffichage)) {
         delay(5000);
         ESP.restart();
@@ -344,7 +344,7 @@ void setup() {
             lireTactile();
             if (tactileAppuye()) {
                 const int suivant = (reglageAffichage + 1) % nombreReglagesAffichage();
-                prefs.putInt("affichage", suivant);
+                prefs.putInt("affichage2", suivant);
                 message("Changement d'affichage…",
                         {std::string("Essai du réglage n°") + std::to_string(suivant + 1) + " : " + nomReglageAffichage(suivant),
                          "Redémarrage."}, coul::ORANGE);

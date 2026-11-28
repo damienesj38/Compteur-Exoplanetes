@@ -1,55 +1,1866 @@
 {
-  "_aide": "Réserve du chiffre du jour. Types : distance et temps_lumiere (calculés chaque jour avec JPL Horizons), jours_depuis, jours_avant, moyenne_exo. 'cible' = identifiant Horizons, 'verif' = mot qui doit figurer dans le nom renvoyé par Horizons. Un chiffre ne revient pas avant 'ecart_minimum_jours' (voir reglages.json). Pour en ajouter un, copier une ligne et changer l'id.",
+  "_aide": "Réserve du chiffre du jour. Types : distance et temps_lumiere (calculés chaque jour avec JPL Horizons), jours_depuis, jours_avant, moyenne_exo, et fixe (valeur, unite, legende et texte écrits à la main). Pour l'écran : 'valeur' ne contient que des chiffres, espaces, virgules, points, deux-points, + ou -, et reste courte ; 'unite' tient sur 2 petites lignes ; 'legende' sur 2 lignes (environ 50 caractères). 'cible' = identifiant Horizons, 'verif' = mot qui doit figurer dans le nom renvoyé par Horizons. Un chiffre ne revient pas avant 'ecart_minimum_jours' (voir reglages.json). Pour en ajouter un, copier une ligne et changer l'id.",
   "chiffres": [
-    {"id": "voyager1_distance", "type": "distance", "cible": "-31", "verif": "voyager 1", "legende": "Voyager 1 · distance", "texte": "Voyager 1, l'objet humain le plus lointain, est à {valeur} {unite} de la Terre."},
-    {"id": "voyager2_distance", "type": "distance", "cible": "-32", "verif": "voyager 2", "legende": "Voyager 2 · distance", "texte": "Voyager 2 est à {valeur} {unite} de la Terre."},
-    {"id": "newhorizons_distance", "type": "distance", "cible": "-98", "verif": "new horizons", "legende": "New Horizons · distance", "texte": "La sonde New Horizons, passée près de Pluton en 2015, est à {valeur} {unite} de nous."},
-    {"id": "jwst_distance", "type": "distance", "cible": "-170", "verif": "webb", "legende": "James Webb · distance", "texte": "Le télescope James Webb est à {valeur} {unite} de la Terre."},
-    {"id": "parker_distance", "type": "distance", "cible": "-96", "verif": "parker", "legende": "Parker Solar Probe", "texte": "La sonde Parker, qui frôle le Soleil, est à {valeur} {unite} de la Terre."},
-    {"id": "clipper_distance", "type": "distance", "cible": "-159", "verif": "clipper", "legende": "Europa Clipper · distance", "texte": "Europa Clipper, en route vers Jupiter, est à {valeur} {unite} de la Terre."},
-    {"id": "juice_distance", "type": "distance", "cible": "-28", "verif": "juice", "legende": "Juice · distance", "texte": "La sonde européenne Juice, en route vers Jupiter, est à {valeur} {unite} de la Terre."},
-    {"id": "solarorbiter_distance", "type": "distance", "cible": "-144", "verif": "solar orbiter", "legende": "Solar Orbiter · distance", "texte": "Solar Orbiter est à {valeur} {unite} de la Terre."},
-    {"id": "bepicolombo_distance", "type": "distance", "cible": "-121", "verif": "bepi", "legende": "BepiColombo · distance", "texte": "BepiColombo, la mission européenne et japonaise vers Mercure, est à {valeur} {unite} de la Terre."},
-    {"id": "lucy_distance", "type": "distance", "cible": "-49", "verif": "lucy", "legende": "Lucy · distance", "texte": "La sonde Lucy, en route vers les astéroïdes troyens, est à {valeur} {unite} de la Terre."},
-    {"id": "psyche_distance", "type": "distance", "cible": "-255", "verif": "psyche", "legende": "Sonde Psyche · distance", "texte": "La sonde Psyche, en route vers l'astéroïde métallique du même nom, est à {valeur} {unite} de la Terre."},
-    {"id": "mercure_distance", "type": "distance", "cible": "199", "verif": "mercury", "legende": "Mercure · distance", "texte": "Mercure est à {valeur} {unite} de la Terre aujourd'hui."},
-    {"id": "venus_distance", "type": "distance", "cible": "299", "verif": "venus", "legende": "Vénus · distance", "texte": "Vénus est à {valeur} {unite} de la Terre aujourd'hui."},
-    {"id": "mars_distance", "type": "distance", "cible": "499", "verif": "mars", "legende": "Mars · distance", "texte": "Mars est à {valeur} {unite} de la Terre aujourd'hui."},
-    {"id": "jupiter_distance", "type": "distance", "cible": "599", "verif": "jupiter", "legende": "Jupiter · distance", "texte": "Jupiter est à {valeur} {unite} de la Terre aujourd'hui."},
-    {"id": "saturne_distance", "type": "distance", "cible": "699", "verif": "saturn", "legende": "Saturne · distance", "texte": "Saturne est à {valeur} {unite} de la Terre aujourd'hui."},
-    {"id": "uranus_distance", "type": "distance", "cible": "799", "verif": "uranus", "legende": "Uranus · distance", "texte": "Uranus est à {valeur} {unite} de la Terre aujourd'hui."},
-    {"id": "neptune_distance", "type": "distance", "cible": "899", "verif": "neptune", "legende": "Neptune · distance", "texte": "Neptune est à {valeur} {unite} de la Terre aujourd'hui."},
-    {"id": "pluton_distance", "type": "distance", "cible": "999", "verif": "pluto", "legende": "Pluton · distance", "texte": "Pluton est à {valeur} {unite} de la Terre aujourd'hui."},
-    {"id": "lune_distance", "type": "distance", "cible": "301", "verif": "moon", "legende": "Lune · distance", "texte": "La Lune est à {valeur} {unite} de la Terre aujourd'hui."},
-    {"id": "soleil_distance", "type": "distance", "cible": "10", "verif": "sun", "legende": "Soleil · distance", "texte": "Le Soleil est à {valeur} {unite} de la Terre aujourd'hui."},
-
-    {"id": "voyager1_lumiere", "type": "temps_lumiere", "cible": "-31", "verif": "voyager 1", "legende": "Signal de Voyager 1", "texte": "Un signal radio met {texte_duree} pour aller de la Terre à Voyager 1."},
-    {"id": "voyager2_lumiere", "type": "temps_lumiere", "cible": "-32", "verif": "voyager 2", "legende": "Signal de Voyager 2", "texte": "Un signal radio met {texte_duree} pour aller de la Terre à Voyager 2."},
-    {"id": "newhorizons_lumiere", "type": "temps_lumiere", "cible": "-98", "verif": "new horizons", "legende": "Signal de New Horizons", "texte": "Un message envoyé à New Horizons met {texte_duree} pour l'atteindre."},
-    {"id": "jupiter_lumiere", "type": "temps_lumiere", "cible": "599", "verif": "jupiter", "legende": "Lumière de Jupiter", "texte": "La lumière de Jupiter met {texte_duree} pour nous parvenir aujourd'hui."},
-    {"id": "neptune_lumiere", "type": "temps_lumiere", "cible": "899", "verif": "neptune", "legende": "Lumière de Neptune", "texte": "La lumière de Neptune met {texte_duree} pour nous parvenir."},
-    {"id": "soleil_lumiere", "type": "temps_lumiere", "cible": "10", "verif": "sun", "legende": "Lumière du Soleil", "texte": "La lumière du Soleil met {texte_duree} pour nous parvenir aujourd'hui."},
-
-    {"id": "jours_spoutnik", "type": "jours_depuis", "date": "1957-10-04", "legende": "jours depuis Spoutnik 1", "texte": "{valeur} jours depuis le lancement de Spoutnik 1, le premier satellite artificiel, soit {annees} ans."},
-    {"id": "jours_gagarine", "type": "jours_depuis", "date": "1961-04-12", "legende": "jours depuis Gagarine", "texte": "{valeur} jours depuis le vol de Youri Gagarine, premier humain dans l'espace."},
-    {"id": "jours_apollo11", "type": "jours_depuis", "date": "1969-07-20", "legende": "jours depuis Apollo 11", "texte": "{valeur} jours depuis l'alunissage d'Apollo 11, soit {annees} ans."},
-    {"id": "jours_voyager2", "type": "jours_depuis", "date": "1977-08-20", "legende": "jours de vol de Voyager 2", "texte": "Voyager 2 voyage depuis {valeur} jours. Elle a décollé le 20 août 1977."},
-    {"id": "jours_voyager1", "type": "jours_depuis", "date": "1977-09-05", "legende": "jours de vol de Voyager 1", "texte": "Voyager 1 voyage depuis {valeur} jours. Elle a décollé le 5 septembre 1977."},
-    {"id": "jours_hubble", "type": "jours_depuis", "date": "1990-04-24", "legende": "jours depuis Hubble", "texte": "{valeur} jours depuis le lancement du télescope Hubble, soit {annees} ans."},
-    {"id": "jours_pulsar", "type": "jours_depuis", "date": "1992-01-09", "legende": "jours depuis 1res exoplanètes", "texte": "{valeur} jours depuis la publication des premières exoplanètes, en orbite autour d'un pulsar."},
-    {"id": "jours_51peg", "type": "jours_depuis", "date": "1995-10-06", "legende": "jours depuis 51 Pegasi b", "texte": "{valeur} jours depuis l'annonce de 51 Pegasi b, première exoplanète autour d'une étoile semblable au Soleil."},
-    {"id": "jours_iss", "type": "jours_depuis", "date": "2000-11-02", "legende": "jours d'ISS habitée", "texte": "La Station spatiale internationale est habitée sans interruption depuis {valeur} jours."},
-    {"id": "jours_curiosity", "type": "jours_depuis", "date": "2012-08-06", "legende": "jours de Curiosity sur Mars", "texte": "Le rover Curiosity est sur Mars depuis {valeur} jours."},
-    {"id": "jours_interstellaire", "type": "jours_depuis", "date": "2012-08-25", "legende": "jours hors de l'héliosphère", "texte": "Voyager 1 est dans l'espace interstellaire depuis {valeur} jours."},
-    {"id": "jours_philae", "type": "jours_depuis", "date": "2014-11-12", "legende": "jours depuis Philae", "texte": "{valeur} jours depuis l'atterrissage de Philae sur la comète Tchouri."},
-    {"id": "jours_pluton", "type": "jours_depuis", "date": "2015-07-14", "legende": "jours depuis le survol de Pluton", "texte": "{valeur} jours depuis le survol de Pluton par New Horizons."},
-    {"id": "jours_pesquet", "type": "jours_depuis", "date": "2016-11-17", "legende": "jours depuis Pesquet 1er vol", "texte": "{valeur} jours depuis le premier décollage de Thomas Pesquet vers l'ISS."},
-    {"id": "jours_perseverance", "type": "jours_depuis", "date": "2021-02-18", "legende": "jours de Perseverance", "texte": "Le rover Perseverance est sur Mars depuis {valeur} jours."},
-    {"id": "jours_jwst", "type": "jours_depuis", "date": "2021-12-25", "legende": "jours depuis James Webb", "texte": "{valeur} jours depuis le lancement du télescope James Webb."},
-
-    {"id": "avant_eclipse_2027", "type": "jours_avant", "date": "2027-08-02", "legende": "jours avant l'éclipse 2027", "texte": "Plus que {valeur} jours avant l'éclipse totale de Soleil du 2 août 2027."},
-    {"id": "avant_halley", "type": "jours_avant", "date": "2061-07-28", "legende": "jours avant la comète de Halley", "texte": "Plus que {valeur} jours avant le retour de la comète de Halley près du Soleil."},
-
-    {"id": "moyenne_exo_mois", "type": "moyenne_exo", "depuis": "1995-10-06", "legende": "objets catalogués par mois", "texte": "Depuis 51 Pegasi b, le catalogue s'enrichit en moyenne de {valeur} objets extrasolaires par mois."}
+    {
+      "id": "voyager1_distance",
+      "type": "distance",
+      "cible": "-31",
+      "verif": "voyager 1",
+      "legende": "Voyager 1 · distance",
+      "texte": "Voyager 1, l'objet humain le plus lointain, est à {valeur} {unite} de la Terre."
+    },
+    {
+      "id": "voyager2_distance",
+      "type": "distance",
+      "cible": "-32",
+      "verif": "voyager 2",
+      "legende": "Voyager 2 · distance",
+      "texte": "Voyager 2 est à {valeur} {unite} de la Terre."
+    },
+    {
+      "id": "newhorizons_distance",
+      "type": "distance",
+      "cible": "-98",
+      "verif": "new horizons",
+      "legende": "New Horizons · distance",
+      "texte": "La sonde New Horizons, passée près de Pluton en 2015, est à {valeur} {unite} de nous."
+    },
+    {
+      "id": "jwst_distance",
+      "type": "distance",
+      "cible": "-170",
+      "verif": "webb",
+      "legende": "James Webb · distance",
+      "texte": "Le télescope James Webb est à {valeur} {unite} de la Terre."
+    },
+    {
+      "id": "parker_distance",
+      "type": "distance",
+      "cible": "-96",
+      "verif": "parker",
+      "legende": "Parker Solar Probe",
+      "texte": "La sonde Parker, qui frôle le Soleil, est à {valeur} {unite} de la Terre."
+    },
+    {
+      "id": "clipper_distance",
+      "type": "distance",
+      "cible": "-159",
+      "verif": "clipper",
+      "legende": "Europa Clipper · distance",
+      "texte": "Europa Clipper, en route vers Jupiter, est à {valeur} {unite} de la Terre."
+    },
+    {
+      "id": "juice_distance",
+      "type": "distance",
+      "cible": "-28",
+      "verif": "juice",
+      "legende": "Juice · distance",
+      "texte": "La sonde européenne Juice, en route vers Jupiter, est à {valeur} {unite} de la Terre."
+    },
+    {
+      "id": "solarorbiter_distance",
+      "type": "distance",
+      "cible": "-144",
+      "verif": "solar orbiter",
+      "legende": "Solar Orbiter · distance",
+      "texte": "Solar Orbiter est à {valeur} {unite} de la Terre."
+    },
+    {
+      "id": "bepicolombo_distance",
+      "type": "distance",
+      "cible": "-121",
+      "verif": "bepi",
+      "legende": "BepiColombo · distance",
+      "texte": "BepiColombo, la mission européenne et japonaise vers Mercure, est à {valeur} {unite} de la Terre."
+    },
+    {
+      "id": "lucy_distance",
+      "type": "distance",
+      "cible": "-49",
+      "verif": "lucy",
+      "legende": "Lucy · distance",
+      "texte": "La sonde Lucy, en route vers les astéroïdes troyens, est à {valeur} {unite} de la Terre."
+    },
+    {
+      "id": "psyche_distance",
+      "type": "distance",
+      "cible": "-255",
+      "verif": "psyche",
+      "legende": "Sonde Psyche · distance",
+      "texte": "La sonde Psyche, en route vers l'astéroïde métallique du même nom, est à {valeur} {unite} de la Terre."
+    },
+    {
+      "id": "mercure_distance",
+      "type": "distance",
+      "cible": "199",
+      "verif": "mercury",
+      "legende": "Mercure · distance",
+      "texte": "Mercure est à {valeur} {unite} de la Terre aujourd'hui."
+    },
+    {
+      "id": "venus_distance",
+      "type": "distance",
+      "cible": "299",
+      "verif": "venus",
+      "legende": "Vénus · distance",
+      "texte": "Vénus est à {valeur} {unite} de la Terre aujourd'hui."
+    },
+    {
+      "id": "mars_distance",
+      "type": "distance",
+      "cible": "499",
+      "verif": "mars",
+      "legende": "Mars · distance",
+      "texte": "Mars est à {valeur} {unite} de la Terre aujourd'hui."
+    },
+    {
+      "id": "jupiter_distance",
+      "type": "distance",
+      "cible": "599",
+      "verif": "jupiter",
+      "legende": "Jupiter · distance",
+      "texte": "Jupiter est à {valeur} {unite} de la Terre aujourd'hui."
+    },
+    {
+      "id": "saturne_distance",
+      "type": "distance",
+      "cible": "699",
+      "verif": "saturn",
+      "legende": "Saturne · distance",
+      "texte": "Saturne est à {valeur} {unite} de la Terre aujourd'hui."
+    },
+    {
+      "id": "uranus_distance",
+      "type": "distance",
+      "cible": "799",
+      "verif": "uranus",
+      "legende": "Uranus · distance",
+      "texte": "Uranus est à {valeur} {unite} de la Terre aujourd'hui."
+    },
+    {
+      "id": "neptune_distance",
+      "type": "distance",
+      "cible": "899",
+      "verif": "neptune",
+      "legende": "Neptune · distance",
+      "texte": "Neptune est à {valeur} {unite} de la Terre aujourd'hui."
+    },
+    {
+      "id": "pluton_distance",
+      "type": "distance",
+      "cible": "999",
+      "verif": "pluto",
+      "legende": "Pluton · distance",
+      "texte": "Pluton est à {valeur} {unite} de la Terre aujourd'hui."
+    },
+    {
+      "id": "lune_distance",
+      "type": "distance",
+      "cible": "301",
+      "verif": "moon",
+      "legende": "Lune · distance",
+      "texte": "La Lune est à {valeur} {unite} de la Terre aujourd'hui."
+    },
+    {
+      "id": "soleil_distance",
+      "type": "distance",
+      "cible": "10",
+      "verif": "sun",
+      "legende": "Soleil · distance",
+      "texte": "Le Soleil est à {valeur} {unite} de la Terre aujourd'hui."
+    },
+    {
+      "id": "voyager1_lumiere",
+      "type": "temps_lumiere",
+      "cible": "-31",
+      "verif": "voyager 1",
+      "legende": "Signal de Voyager 1",
+      "texte": "Un signal radio met {texte_duree} pour aller de la Terre à Voyager 1."
+    },
+    {
+      "id": "voyager2_lumiere",
+      "type": "temps_lumiere",
+      "cible": "-32",
+      "verif": "voyager 2",
+      "legende": "Signal de Voyager 2",
+      "texte": "Un signal radio met {texte_duree} pour aller de la Terre à Voyager 2."
+    },
+    {
+      "id": "newhorizons_lumiere",
+      "type": "temps_lumiere",
+      "cible": "-98",
+      "verif": "new horizons",
+      "legende": "Signal de New Horizons",
+      "texte": "Un message envoyé à New Horizons met {texte_duree} pour l'atteindre."
+    },
+    {
+      "id": "jupiter_lumiere",
+      "type": "temps_lumiere",
+      "cible": "599",
+      "verif": "jupiter",
+      "legende": "Lumière de Jupiter",
+      "texte": "La lumière de Jupiter met {texte_duree} pour nous parvenir aujourd'hui."
+    },
+    {
+      "id": "neptune_lumiere",
+      "type": "temps_lumiere",
+      "cible": "899",
+      "verif": "neptune",
+      "legende": "Lumière de Neptune",
+      "texte": "La lumière de Neptune met {texte_duree} pour nous parvenir."
+    },
+    {
+      "id": "soleil_lumiere",
+      "type": "temps_lumiere",
+      "cible": "10",
+      "verif": "sun",
+      "legende": "Lumière du Soleil",
+      "texte": "La lumière du Soleil met {texte_duree} pour nous parvenir aujourd'hui."
+    },
+    {
+      "id": "jours_spoutnik",
+      "type": "jours_depuis",
+      "date": "1957-10-04",
+      "legende": "jours depuis Spoutnik 1",
+      "texte": "{valeur} jours depuis le lancement de Spoutnik 1, le premier satellite artificiel, soit {annees} ans."
+    },
+    {
+      "id": "jours_gagarine",
+      "type": "jours_depuis",
+      "date": "1961-04-12",
+      "legende": "jours depuis Gagarine",
+      "texte": "{valeur} jours depuis le vol de Youri Gagarine, premier humain dans l'espace."
+    },
+    {
+      "id": "jours_apollo11",
+      "type": "jours_depuis",
+      "date": "1969-07-20",
+      "legende": "jours depuis Apollo 11",
+      "texte": "{valeur} jours depuis l'alunissage d'Apollo 11, soit {annees} ans."
+    },
+    {
+      "id": "jours_voyager2",
+      "type": "jours_depuis",
+      "date": "1977-08-20",
+      "legende": "jours de vol de Voyager 2",
+      "texte": "Voyager 2 voyage depuis {valeur} jours. Elle a décollé le 20 août 1977."
+    },
+    {
+      "id": "jours_voyager1",
+      "type": "jours_depuis",
+      "date": "1977-09-05",
+      "legende": "jours de vol de Voyager 1",
+      "texte": "Voyager 1 voyage depuis {valeur} jours. Elle a décollé le 5 septembre 1977."
+    },
+    {
+      "id": "jours_hubble",
+      "type": "jours_depuis",
+      "date": "1990-04-24",
+      "legende": "jours depuis Hubble",
+      "texte": "{valeur} jours depuis le lancement du télescope Hubble, soit {annees} ans."
+    },
+    {
+      "id": "jours_pulsar",
+      "type": "jours_depuis",
+      "date": "1992-01-09",
+      "legende": "jours depuis 1res exoplanètes",
+      "texte": "{valeur} jours depuis la publication des premières exoplanètes, en orbite autour d'un pulsar."
+    },
+    {
+      "id": "jours_51peg",
+      "type": "jours_depuis",
+      "date": "1995-10-06",
+      "legende": "jours depuis 51 Pegasi b",
+      "texte": "{valeur} jours depuis l'annonce de 51 Pegasi b, première exoplanète autour d'une étoile semblable au Soleil."
+    },
+    {
+      "id": "jours_iss",
+      "type": "jours_depuis",
+      "date": "2000-11-02",
+      "legende": "jours d'ISS habitée",
+      "texte": "La Station spatiale internationale est habitée sans interruption depuis {valeur} jours."
+    },
+    {
+      "id": "jours_curiosity",
+      "type": "jours_depuis",
+      "date": "2012-08-06",
+      "legende": "jours de Curiosity sur Mars",
+      "texte": "Le rover Curiosity est sur Mars depuis {valeur} jours."
+    },
+    {
+      "id": "jours_interstellaire",
+      "type": "jours_depuis",
+      "date": "2012-08-25",
+      "legende": "jours hors de l'héliosphère",
+      "texte": "Voyager 1 est dans l'espace interstellaire depuis {valeur} jours."
+    },
+    {
+      "id": "jours_philae",
+      "type": "jours_depuis",
+      "date": "2014-11-12",
+      "legende": "jours depuis Philae",
+      "texte": "{valeur} jours depuis l'atterrissage de Philae sur la comète Tchouri."
+    },
+    {
+      "id": "jours_pluton",
+      "type": "jours_depuis",
+      "date": "2015-07-14",
+      "legende": "jours depuis le survol de Pluton",
+      "texte": "{valeur} jours depuis le survol de Pluton par New Horizons."
+    },
+    {
+      "id": "jours_pesquet",
+      "type": "jours_depuis",
+      "date": "2016-11-17",
+      "legende": "jours depuis Pesquet 1er vol",
+      "texte": "{valeur} jours depuis le premier décollage de Thomas Pesquet vers l'ISS."
+    },
+    {
+      "id": "jours_perseverance",
+      "type": "jours_depuis",
+      "date": "2021-02-18",
+      "legende": "jours de Perseverance",
+      "texte": "Le rover Perseverance est sur Mars depuis {valeur} jours."
+    },
+    {
+      "id": "jours_jwst",
+      "type": "jours_depuis",
+      "date": "2021-12-25",
+      "legende": "jours depuis James Webb",
+      "texte": "{valeur} jours depuis le lancement du télescope James Webb."
+    },
+    {
+      "id": "avant_eclipse_2027",
+      "type": "jours_avant",
+      "date": "2027-08-02",
+      "legende": "jours avant l'éclipse 2027",
+      "texte": "Plus que {valeur} jours avant l'éclipse totale de Soleil du 2 août 2027."
+    },
+    {
+      "id": "avant_halley",
+      "type": "jours_avant",
+      "date": "2061-07-28",
+      "legende": "jours avant la comète de Halley",
+      "texte": "Plus que {valeur} jours avant le retour de la comète de Halley près du Soleil."
+    },
+    {
+      "id": "moyenne_exo_mois",
+      "type": "moyenne_exo",
+      "depuis": "1995-10-06",
+      "legende": "objets catalogués par mois",
+      "texte": "Depuis 51 Pegasi b, le catalogue s'enrichit en moyenne de {valeur} objets extrasolaires par mois."
+    },
+    {
+      "id": "soleil_diametre",
+      "type": "fixe",
+      "valeur": "1,39",
+      "unite": "million de km",
+      "legende": "Diamètre du Soleil, 109 fois celui de la Terre",
+      "texte": "Le Soleil mesure 1 392 700 km de diamètre, environ 109 fois la Terre."
+    },
+    {
+      "id": "soleil_masse_part",
+      "type": "fixe",
+      "valeur": "99,86",
+      "unite": "%",
+      "legende": "Part de la masse du Système solaire dans le Soleil",
+      "texte": "Le Soleil concentre à lui seul 99,86 % de la masse du Système solaire."
+    },
+    {
+      "id": "soleil_coeur",
+      "type": "fixe",
+      "valeur": "15",
+      "unite": "millions de °C",
+      "legende": "Température au cœur du Soleil",
+      "texte": "Au cœur du Soleil, où l'hydrogène fusionne, il fait 15 millions de degrés."
+    },
+    {
+      "id": "soleil_surface",
+      "type": "fixe",
+      "valeur": "5 500",
+      "unite": "°C",
+      "legende": "Température de la surface visible du Soleil",
+      "texte": "La photosphère, surface visible du Soleil, est à environ 5 500 °C."
+    },
+    {
+      "id": "soleil_couronne",
+      "type": "fixe",
+      "valeur": "1-2",
+      "unite": "millions de °C",
+      "legende": "Couronne solaire, bien plus chaude que la surface",
+      "texte": "La couronne solaire atteint 1 à 2 millions de degrés, bien plus que la surface."
+    },
+    {
+      "id": "soleil_fusion",
+      "type": "fixe",
+      "valeur": "600",
+      "unite": "millions de tonnes",
+      "legende": "Hydrogène changé en hélium chaque seconde",
+      "texte": "Chaque seconde, le Soleil transforme environ 600 millions de tonnes d'hydrogène en hélium."
+    },
+    {
+      "id": "soleil_perte",
+      "type": "fixe",
+      "valeur": "4",
+      "unite": "millions de tonnes",
+      "legende": "Masse perdue par le Soleil chaque seconde",
+      "texte": "Chaque seconde, le Soleil perd environ 4 millions de tonnes, converties en énergie (E = mc²)."
+    },
+    {
+      "id": "soleil_photon",
+      "type": "fixe",
+      "valeur": "100 000",
+      "unite": "ans environ",
+      "legende": "Temps pour qu'un photon sorte du cœur solaire",
+      "texte": "Un photon né au cœur du Soleil met de l'ordre de 100 000 ans pour atteindre la surface."
+    },
+    {
+      "id": "soleil_cycle",
+      "type": "fixe",
+      "valeur": "11",
+      "unite": "ans",
+      "legende": "Durée moyenne d'un cycle d'activité solaire",
+      "texte": "Le Soleil suit un cycle d'activité d'environ 11 ans, avec un pic de taches solaires."
+    },
+    {
+      "id": "soleil_rotation",
+      "type": "fixe",
+      "valeur": "25,4",
+      "unite": "jours",
+      "legende": "Rotation du Soleil à l'équateur (35 j aux pôles)",
+      "texte": "Le Soleil tourne sur lui-même en 25,4 jours à l'équateur, mais en 35 jours près des pôles."
+    },
+    {
+      "id": "soleil_age",
+      "type": "fixe",
+      "valeur": "4,6",
+      "unite": "milliards d'années",
+      "legende": "Âge du Soleil, environ à mi-vie",
+      "texte": "Le Soleil a 4,6 milliards d'années, à peu près la moitié de sa vie."
+    },
+    {
+      "id": "soleil_geante",
+      "type": "fixe",
+      "valeur": "5",
+      "unite": "milliards d'années",
+      "legende": "Avant que le Soleil devienne une géante rouge",
+      "texte": "Dans environ 5 milliards d'années, le Soleil deviendra une géante rouge."
+    },
+    {
+      "id": "vent_solaire",
+      "type": "fixe",
+      "valeur": "400",
+      "unite": "à 800 km/s",
+      "legende": "Vitesse du vent solaire",
+      "texte": "Le vent solaire souffle dans l'espace à 400 à 800 km par seconde."
+    },
+    {
+      "id": "constante_solaire",
+      "type": "fixe",
+      "valeur": "1 361",
+      "unite": "W/m²",
+      "legende": "Puissance solaire reçue au-dessus de l'atmosphère",
+      "texte": "Au sommet de l'atmosphère, chaque mètre carré reçoit 1 361 watts du Soleil."
+    },
+    {
+      "id": "soleil_volume",
+      "type": "fixe",
+      "valeur": "1,3",
+      "unite": "million de Terres",
+      "legende": "Nombre de Terres qui tiendraient dans le Soleil",
+      "texte": "Environ 1,3 million de Terres tiendraient dans le volume du Soleil."
+    },
+    {
+      "id": "soleil_masse",
+      "type": "fixe",
+      "valeur": "333 000",
+      "unite": "Terres",
+      "legende": "Masse du Soleil en masses terrestres",
+      "texte": "Le Soleil est 333 000 fois plus massif que la Terre."
+    },
+    {
+      "id": "soleil_vitesse_galaxie",
+      "type": "fixe",
+      "valeur": "220",
+      "unite": "km/s",
+      "legende": "Vitesse du Soleil autour du centre galactique",
+      "texte": "Le Soleil file à environ 220 km/s autour du centre de la Voie lactée."
+    },
+    {
+      "id": "annee_galactique",
+      "type": "fixe",
+      "valeur": "225-250",
+      "unite": "millions d'années",
+      "legende": "Une année galactique : un tour de la Voie lactée",
+      "texte": "Le Soleil met 225 à 250 millions d'années pour faire le tour de la Galaxie."
+    },
+    {
+      "id": "heliopause",
+      "type": "fixe",
+      "valeur": "120",
+      "unite": "UA",
+      "legende": "Distance de l'héliopause, frontière du vent solaire",
+      "texte": "L'héliopause, où le vent solaire cède face au milieu interstellaire, est à environ 120 fois la distance Terre-Soleil."
+    },
+    {
+      "id": "lune_distance_moy",
+      "type": "fixe",
+      "valeur": "384 400",
+      "unite": "km",
+      "legende": "Distance moyenne Terre-Lune",
+      "texte": "La Lune est en moyenne à 384 400 km de la Terre."
+    },
+    {
+      "id": "lune_recul",
+      "type": "fixe",
+      "valeur": "3,8",
+      "unite": "cm par an",
+      "legende": "La Lune s'éloigne de la Terre chaque année",
+      "texte": "Mesurée au laser, la Lune s'éloigne de la Terre de 3,8 cm par an."
+    },
+    {
+      "id": "lune_sideral",
+      "type": "fixe",
+      "valeur": "27,3",
+      "unite": "jours",
+      "legende": "Un tour de la Lune autour de la Terre",
+      "texte": "La Lune fait le tour de la Terre et tourne sur elle-même en 27,3 jours, d'où sa face cachée."
+    },
+    {
+      "id": "lunaison",
+      "type": "fixe",
+      "valeur": "29,5",
+      "unite": "jours",
+      "legende": "Durée d'une lunaison, d'une pleine lune à l'autre",
+      "texte": "Il s'écoule 29,5 jours entre deux pleines lunes."
+    },
+    {
+      "id": "lune_diametre",
+      "type": "fixe",
+      "valeur": "3 474",
+      "unite": "km",
+      "legende": "Diamètre de la Lune",
+      "texte": "La Lune mesure 3 474 km de diamètre, un peu plus du quart de la Terre."
+    },
+    {
+      "id": "lune_lumiere",
+      "type": "fixe",
+      "valeur": "1,28",
+      "unite": "seconde",
+      "legende": "Trajet de la lumière de la Lune jusqu'à nous",
+      "texte": "La lumière renvoyée par la Lune met 1,28 seconde pour nous parvenir."
+    },
+    {
+      "id": "lune_gravite",
+      "type": "fixe",
+      "valeur": "16,5",
+      "unite": "%",
+      "legende": "Gravité lunaire comparée à la Terre (1/6)",
+      "texte": "Sur la Lune, la pesanteur ne vaut qu'environ un sixième de celle de la Terre."
+    },
+    {
+      "id": "lune_temperature",
+      "type": "fixe",
+      "valeur": "120",
+      "unite": "°C",
+      "legende": "Jour lunaire à l'équateur (-130 °C la nuit)",
+      "texte": "À l'équateur lunaire, il fait environ 120 °C le jour et -130 °C la nuit."
+    },
+    {
+      "id": "terre_orbite",
+      "type": "fixe",
+      "valeur": "107 000",
+      "unite": "km/h",
+      "legende": "Vitesse de la Terre autour du Soleil",
+      "texte": "La Terre file à 107 000 km/h sur son orbite autour du Soleil."
+    },
+    {
+      "id": "terre_rotation",
+      "type": "fixe",
+      "valeur": "1 670",
+      "unite": "km/h",
+      "legende": "Vitesse d'un point de l'équateur terrestre",
+      "texte": "Avec la rotation de la Terre, un point de l'équateur se déplace à 1 670 km/h."
+    },
+    {
+      "id": "terre_axe",
+      "type": "fixe",
+      "valeur": "23,44",
+      "unite": "degrés",
+      "legende": "Inclinaison de l'axe terrestre, origine des saisons",
+      "texte": "L'axe de la Terre est incliné de 23,44°, ce qui crée les saisons."
+    },
+    {
+      "id": "precession",
+      "type": "fixe",
+      "valeur": "26 000",
+      "unite": "ans",
+      "legende": "Cycle de précession des équinoxes",
+      "texte": "L'axe de la Terre décrit un cercle, comme une toupie, en 26 000 ans."
+    },
+    {
+      "id": "terre_diametre",
+      "type": "fixe",
+      "valeur": "12 742",
+      "unite": "km",
+      "legende": "Diamètre moyen de la Terre",
+      "texte": "La Terre mesure en moyenne 12 742 km de diamètre, un peu plus à l'équateur qu'aux pôles."
+    },
+    {
+      "id": "karman",
+      "type": "fixe",
+      "valeur": "100",
+      "unite": "km",
+      "legende": "Ligne de Kármán, frontière conventionnelle de l'espace",
+      "texte": "Par convention, l'espace commence à 100 km d'altitude, à la ligne de Kármán."
+    },
+    {
+      "id": "liberation",
+      "type": "fixe",
+      "valeur": "11,2",
+      "unite": "km/s",
+      "legende": "Vitesse pour échapper à l'attraction terrestre",
+      "texte": "Il faut atteindre 11,2 km/s, soit 40 320 km/h, pour échapper à l'attraction de la Terre."
+    },
+    {
+      "id": "orbite_basse",
+      "type": "fixe",
+      "valeur": "7,8",
+      "unite": "km/s",
+      "legende": "Vitesse pour rester en orbite basse, comme l'ISS",
+      "texte": "En orbite basse, comme l'ISS, il faut filer à 7,8 km/s, environ 28 000 km/h."
+    },
+    {
+      "id": "geostationnaire",
+      "type": "fixe",
+      "valeur": "35 786",
+      "unite": "km",
+      "legende": "Altitude de l'orbite géostationnaire",
+      "texte": "À 35 786 km d'altitude, un satellite tourne au même rythme que la Terre."
+    },
+    {
+      "id": "lune_age",
+      "type": "fixe",
+      "valeur": "4,51",
+      "unite": "milliards d'années",
+      "legende": "Âge estimé de la Lune",
+      "texte": "La Lune serait née il y a environ 4,5 milliards d'années d'un impact géant avec la jeune Terre."
+    },
+    {
+      "id": "lune_albedo",
+      "type": "fixe",
+      "valeur": "11",
+      "unite": "%",
+      "legende": "Part de la lumière du Soleil renvoyée par la Lune",
+      "texte": "La Lune ne renvoie qu'environ 11 % de la lumière qu'elle reçoit, à peu près comme de l'asphalte."
+    },
+    {
+      "id": "lune_marcheurs",
+      "type": "fixe",
+      "valeur": "12",
+      "unite": "humains",
+      "legende": "Personnes ayant marché sur la Lune",
+      "texte": "Douze astronautes ont marché sur la Lune, entre 1969 et 1972."
+    },
+    {
+      "id": "apollo_echantillons",
+      "type": "fixe",
+      "valeur": "382",
+      "unite": "kg",
+      "legende": "Roches lunaires rapportées par Apollo",
+      "texte": "Les missions Apollo ont rapporté 382 kg d'échantillons lunaires."
+    },
+    {
+      "id": "change6",
+      "type": "fixe",
+      "valeur": "1 935",
+      "unite": "grammes",
+      "legende": "Échantillons de la face cachée (Chang'e 6)",
+      "texte": "La mission chinoise Chang'e 6 a rapporté 1 935 g d'échantillons de la face cachée de la Lune."
+    },
+    {
+      "id": "eclipse_max",
+      "type": "fixe",
+      "valeur": "7:32",
+      "unite": "min:s",
+      "legende": "Durée maximale d'une éclipse totale de Soleil",
+      "texte": "Une éclipse totale de Soleil ne peut pas dépasser environ 7 minutes et 32 secondes."
+    },
+    {
+      "id": "saros",
+      "type": "fixe",
+      "valeur": "18",
+      "unite": "ans et 11 jours",
+      "legende": "Le saros, cycle de retour des éclipses",
+      "texte": "Tous les 18 ans et 11 jours, Soleil, Terre et Lune retrouvent presque la même configuration."
+    },
+    {
+      "id": "nb_planetes",
+      "type": "fixe",
+      "valeur": "8",
+      "unite": "planètes",
+      "legende": "Planètes du Système solaire depuis 2006",
+      "texte": "Le Système solaire compte officiellement 8 planètes depuis le reclassement de Pluton en 2006."
+    },
+    {
+      "id": "nb_naines",
+      "type": "fixe",
+      "valeur": "5",
+      "unite": "planètes naines",
+      "legende": "Cérès, Pluton, Hauméa, Makémaké et Éris",
+      "texte": "L'UAI reconnaît 5 planètes naines : Cérès, Pluton, Hauméa, Makémaké et Éris."
+    },
+    {
+      "id": "mercure_annee",
+      "type": "fixe",
+      "valeur": "88",
+      "unite": "jours",
+      "legende": "Durée d'une année sur Mercure",
+      "texte": "Mercure fait le tour du Soleil en 88 jours, à 47 km/s."
+    },
+    {
+      "id": "mercure_jour",
+      "type": "fixe",
+      "valeur": "176",
+      "unite": "jours",
+      "legende": "D'un lever de Soleil au suivant sur Mercure",
+      "texte": "Sur Mercure, il s'écoule 176 jours d'un lever de Soleil au suivant."
+    },
+    {
+      "id": "mercure_diametre",
+      "type": "fixe",
+      "valeur": "4 879",
+      "unite": "km",
+      "legende": "Diamètre de Mercure, à peine plus que la Lune",
+      "texte": "Mercure mesure 4 879 km, moins que Ganymède ou Titan."
+    },
+    {
+      "id": "venus_temperature",
+      "type": "fixe",
+      "valeur": "465",
+      "unite": "°C",
+      "legende": "Au sol de Vénus, plus chaude que Mercure",
+      "texte": "À cause de l'effet de serre, il fait 465 °C au sol de Vénus, plus que sur Mercure."
+    },
+    {
+      "id": "venus_pression",
+      "type": "fixe",
+      "valeur": "92",
+      "unite": "bars",
+      "legende": "Pression au sol de Vénus",
+      "texte": "La pression au sol de Vénus atteint 92 fois celle de la Terre, comme à 900 m sous la mer."
+    },
+    {
+      "id": "venus_rotation",
+      "type": "fixe",
+      "valeur": "243",
+      "unite": "jours",
+      "legende": "Rotation de Vénus, plus longue que son année",
+      "texte": "Vénus tourne sur elle-même en 243 jours, à l'envers : le Soleil s'y lève à l'ouest."
+    },
+    {
+      "id": "venus_annee",
+      "type": "fixe",
+      "valeur": "224,7",
+      "unite": "jours",
+      "legende": "Durée d'une année sur Vénus",
+      "texte": "Vénus fait le tour du Soleil en 224,7 jours."
+    },
+    {
+      "id": "mars_annee",
+      "type": "fixe",
+      "valeur": "687",
+      "unite": "jours",
+      "legende": "Durée d'une année martienne",
+      "texte": "Une année sur Mars dure 687 jours, presque deux années terrestres."
+    },
+    {
+      "id": "mars_sol",
+      "type": "fixe",
+      "valeur": "24:39",
+      "unite": "h:min",
+      "legende": "Durée d'un jour martien, le « sol »",
+      "texte": "Un jour martien, appelé sol, dure 24 heures et 39 minutes."
+    },
+    {
+      "id": "olympus",
+      "type": "fixe",
+      "valeur": "21,9",
+      "unite": "km",
+      "legende": "Olympus Mons, plus haut volcan connu",
+      "texte": "Le volcan martien Olympus Mons culmine à 21,9 km, environ 2,5 fois l'Everest."
+    },
+    {
+      "id": "valles",
+      "type": "fixe",
+      "valeur": "4 000",
+      "unite": "km",
+      "legende": "Longueur du canyon martien Valles Marineris",
+      "texte": "Valles Marineris, sur Mars, s'étire sur 4 000 km."
+    },
+    {
+      "id": "mars_pression",
+      "type": "fixe",
+      "valeur": "0,6",
+      "unite": "%",
+      "legende": "Pression au sol de Mars comparée à la Terre",
+      "texte": "Au sol de Mars, la pression ne vaut que 0,6 % de celle de la Terre."
+    },
+    {
+      "id": "mars_lunes",
+      "type": "fixe",
+      "valeur": "2",
+      "unite": "lunes",
+      "legende": "Satellites de Mars : Phobos et Deimos",
+      "texte": "Mars a deux petites lunes, Phobos et Deimos."
+    },
+    {
+      "id": "phobos",
+      "type": "fixe",
+      "valeur": "1,8",
+      "unite": "m par siècle",
+      "legende": "Phobos se rapproche de Mars",
+      "texte": "Phobos se rapproche de Mars d'environ 1,8 m par siècle ; il finira brisé d'ici 30 à 50 millions d'années."
+    },
+    {
+      "id": "jupiter_jour",
+      "type": "fixe",
+      "valeur": "9:55",
+      "unite": "h:min",
+      "legende": "Un jour sur Jupiter, la rotation la plus rapide",
+      "texte": "Jupiter tourne sur elle-même en 9 heures et 55 minutes."
+    },
+    {
+      "id": "jupiter_diametre",
+      "type": "fixe",
+      "valeur": "139 820",
+      "unite": "km",
+      "legende": "Diamètre de Jupiter, 11 fois la Terre",
+      "texte": "Jupiter mesure 139 820 km à l'équateur."
+    },
+    {
+      "id": "jupiter_masse",
+      "type": "fixe",
+      "valeur": "318",
+      "unite": "Terres",
+      "legende": "Masse de Jupiter en masses terrestres",
+      "texte": "Jupiter est 318 fois plus massive que la Terre, et 2,5 fois plus que toutes les autres planètes réunies."
+    },
+    {
+      "id": "tache_rouge",
+      "type": "fixe",
+      "valeur": "16 350",
+      "unite": "km",
+      "legende": "Largeur de la Grande Tache Rouge (2017)",
+      "texte": "En 2017, la Grande Tache Rouge de Jupiter mesurait 16 350 km de large. Elle rétrécit depuis un siècle."
+    },
+    {
+      "id": "tache_vents",
+      "type": "fixe",
+      "valeur": "430",
+      "unite": "km/h",
+      "legende": "Vents au bord de la Grande Tache Rouge",
+      "texte": "Les vents atteignent 430 km/h au bord de la Grande Tache Rouge."
+    },
+    {
+      "id": "jupiter_lunes",
+      "type": "fixe",
+      "valeur": "115",
+      "unite": "lunes",
+      "legende": "Satellites connus de Jupiter (CNES, 2026)",
+      "texte": "Selon le CNES, Jupiter comptait 115 lunes connues en 2026."
+    },
+    {
+      "id": "ganymede",
+      "type": "fixe",
+      "valeur": "5 268",
+      "unite": "km",
+      "legende": "Ganymède, plus grande lune du Système solaire",
+      "texte": "Ganymède mesure 5 268 km, plus que la planète Mercure."
+    },
+    {
+      "id": "io_volcans",
+      "type": "fixe",
+      "valeur": "400",
+      "unite": "volcans",
+      "legende": "Volcans actifs sur Io, lune de Jupiter",
+      "texte": "Io, lune de Jupiter, compte environ 400 volcans actifs."
+    },
+    {
+      "id": "anneaux_diametre",
+      "type": "fixe",
+      "valeur": "280 000",
+      "unite": "km",
+      "legende": "Diamètre des anneaux principaux de Saturne",
+      "texte": "Les anneaux principaux de Saturne s'étendent sur environ 280 000 km."
+    },
+    {
+      "id": "anneaux_epaisseur",
+      "type": "fixe",
+      "valeur": "10",
+      "unite": "mètres",
+      "legende": "Épaisseur typique des anneaux de Saturne",
+      "texte": "Les anneaux de Saturne ne font souvent qu'une dizaine de mètres d'épaisseur."
+    },
+    {
+      "id": "saturne_densite",
+      "type": "fixe",
+      "valeur": "0,687",
+      "unite": "g/cm³",
+      "legende": "Densité de Saturne, moins que l'eau",
+      "texte": "Saturne est moins dense que l'eau : 0,687 g/cm³."
+    },
+    {
+      "id": "saturne_annee",
+      "type": "fixe",
+      "valeur": "29,5",
+      "unite": "ans",
+      "legende": "Durée d'une année sur Saturne",
+      "texte": "Saturne fait le tour du Soleil en 29,5 ans."
+    },
+    {
+      "id": "saturne_vents",
+      "type": "fixe",
+      "valeur": "1 800",
+      "unite": "km/h",
+      "legende": "Vents les plus rapides de Saturne",
+      "texte": "Les vents de Saturne atteignent 1 800 km/h."
+    },
+    {
+      "id": "saturne_lunes",
+      "type": "fixe",
+      "valeur": "293",
+      "unite": "lunes",
+      "legende": "Satellites connus de Saturne (CNES, 2026)",
+      "texte": "Selon le CNES, Saturne comptait 293 lunes connues en 2026, le record du Système solaire."
+    },
+    {
+      "id": "titan",
+      "type": "fixe",
+      "valeur": "1,5",
+      "unite": "bar",
+      "legende": "Pression au sol de Titan",
+      "texte": "Titan est la seule lune à atmosphère épaisse : 1,5 bar au sol, et des lacs d'hydrocarbures."
+    },
+    {
+      "id": "uranus_axe",
+      "type": "fixe",
+      "valeur": "98",
+      "unite": "degrés",
+      "legende": "Inclinaison d'Uranus, qui roule sur son orbite",
+      "texte": "L'axe d'Uranus est incliné de 98° : la planète semble rouler sur son orbite."
+    },
+    {
+      "id": "uranus_annee",
+      "type": "fixe",
+      "valeur": "84",
+      "unite": "ans",
+      "legende": "Durée d'une année sur Uranus",
+      "texte": "Une année sur Uranus dure 84 ans ; chaque pôle vit 42 ans de jour puis 42 ans de nuit."
+    },
+    {
+      "id": "uranus_froid",
+      "type": "fixe",
+      "valeur": "-224",
+      "unite": "°C",
+      "legende": "Record de froid planétaire, sur Uranus",
+      "texte": "L'atmosphère d'Uranus est descendue à -224 °C, record du Système solaire pour une planète."
+    },
+    {
+      "id": "uranus_lunes",
+      "type": "fixe",
+      "valeur": "29",
+      "unite": "lunes",
+      "legende": "Satellites connus d'Uranus",
+      "texte": "Uranus compte 29 lunes connues."
+    },
+    {
+      "id": "neptune_annee",
+      "type": "fixe",
+      "valeur": "165",
+      "unite": "ans",
+      "legende": "Durée d'une année sur Neptune",
+      "texte": "Neptune met 165 ans à faire le tour du Soleil : une seule orbite depuis sa découverte en 1846."
+    },
+    {
+      "id": "neptune_vents",
+      "type": "fixe",
+      "valeur": "2 100",
+      "unite": "km/h",
+      "legende": "Vents de Neptune, les plus violents connus",
+      "texte": "Sur Neptune, les vents atteignent 2 100 km/h, les plus violents du Système solaire."
+    },
+    {
+      "id": "neptune_lunes",
+      "type": "fixe",
+      "valeur": "16",
+      "unite": "lunes",
+      "legende": "Satellites connus de Neptune, dont Triton",
+      "texte": "Neptune compte 16 lunes connues, dont Triton, qui tourne à contresens."
+    },
+    {
+      "id": "total_lunes",
+      "type": "fixe",
+      "valeur": "450",
+      "unite": "lunes et plus",
+      "legende": "Lunes connues autour des huit planètes",
+      "texte": "Plus de 450 lunes sont connues autour des planètes du Système solaire (CNES, 2026)."
+    },
+    {
+      "id": "pluton_orbite",
+      "type": "fixe",
+      "valeur": "248",
+      "unite": "ans",
+      "legende": "Durée d'une orbite de Pluton",
+      "texte": "Pluton fait le tour du Soleil en 248 ans."
+    },
+    {
+      "id": "pluton_diametre",
+      "type": "fixe",
+      "valeur": "2 377",
+      "unite": "km",
+      "legende": "Diamètre de Pluton, plus petit que la Lune",
+      "texte": "Pluton mesure 2 377 km, moins que notre Lune."
+    },
+    {
+      "id": "pluton_decouverte",
+      "type": "fixe",
+      "valeur": "1930",
+      "unite": "année",
+      "legende": "Découverte de Pluton par Clyde Tombaugh",
+      "texte": "Pluton a été découverte en 1930 par Clyde Tombaugh."
+    },
+    {
+      "id": "voyager2_survols",
+      "type": "fixe",
+      "valeur": "1",
+      "unite": "seule visite",
+      "legende": "Uranus et Neptune, survolées une seule fois",
+      "texte": "Uranus (1986) et Neptune (1989) n'ont été visitées qu'une fois, par Voyager 2."
+    },
+    {
+      "id": "asteroides_ceinture",
+      "type": "fixe",
+      "valeur": "1,3",
+      "unite": "million et plus",
+      "legende": "Astéroïdes catalogués dans la ceinture principale",
+      "texte": "Plus de 1,3 million d'astéroïdes sont catalogués entre Mars et Jupiter."
+    },
+    {
+      "id": "ceinture_masse",
+      "type": "fixe",
+      "valeur": "3",
+      "unite": "%",
+      "legende": "Masse de la ceinture d'astéroïdes comparée à la Lune",
+      "texte": "Tous les astéroïdes de la ceinture principale ne pèsent qu'environ 3 % de la Lune."
+    },
+    {
+      "id": "ceres",
+      "type": "fixe",
+      "valeur": "940",
+      "unite": "km",
+      "legende": "Cérès, plus gros objet de la ceinture d'astéroïdes",
+      "texte": "Cérès, classée planète naine, mesure environ 940 km."
+    },
+    {
+      "id": "vesta",
+      "type": "fixe",
+      "valeur": "525",
+      "unite": "km",
+      "legende": "Vesta, deuxième corps de la ceinture d'astéroïdes",
+      "texte": "Vesta mesure environ 525 km."
+    },
+    {
+      "id": "ceinture_zone",
+      "type": "fixe",
+      "valeur": "2,2",
+      "unite": "à 3,2 UA",
+      "legende": "Zone de la ceinture principale d'astéroïdes",
+      "texte": "La ceinture principale s'étend entre 2,2 et 3,2 fois la distance Terre-Soleil."
+    },
+    {
+      "id": "geocroiseurs",
+      "type": "fixe",
+      "valeur": "42 000",
+      "unite": "et plus",
+      "legende": "Astéroïdes géocroiseurs connus",
+      "texte": "Près de 42 000 astéroïdes géocroiseurs étaient connus mi-2026 (ESA)."
+    },
+    {
+      "id": "geocroiseurs_1km",
+      "type": "fixe",
+      "valeur": "95",
+      "unite": "%",
+      "legende": "Géocroiseurs de plus de 1 km déjà découverts",
+      "texte": "On estime avoir découvert environ 95 % des géocroiseurs de plus de 1 km."
+    },
+    {
+      "id": "apophis",
+      "type": "fixe",
+      "valeur": "340",
+      "unite": "m",
+      "legende": "Diamètre de l'astéroïde Apophis",
+      "texte": "L'astéroïde Apophis mesure environ 340 m."
+    },
+    {
+      "id": "apophis_2029",
+      "type": "fixe",
+      "valeur": "32 000",
+      "unite": "km",
+      "legende": "Apophis frôlera la Terre le 13 avril 2029",
+      "texte": "Le 13 avril 2029, Apophis passera à environ 32 000 km de la surface, plus près que les satellites géostationnaires."
+    },
+    {
+      "id": "dart",
+      "type": "fixe",
+      "valeur": "33",
+      "unite": "minutes",
+      "legende": "Orbite de Dimorphos raccourcie par DART (2022)",
+      "texte": "En 2022, l'impact de la sonde DART a raccourci de 33 minutes l'orbite de l'astéroïde Dimorphos."
+    },
+    {
+      "id": "dimorphos",
+      "type": "fixe",
+      "valeur": "150",
+      "unite": "m",
+      "legende": "Dimorphos, cible de la sonde européenne Hera",
+      "texte": "Dimorphos, percuté par DART, mesure environ 150 m. La sonde Hera va l'étudier."
+    },
+    {
+      "id": "chicxulub_asteroide",
+      "type": "fixe",
+      "valeur": "10",
+      "unite": "à 15 km",
+      "legende": "Astéroïde de la fin des dinosaures",
+      "texte": "L'astéroïde qui a mis fin aux dinosaures il y a 66 millions d'années mesurait 10 à 15 km."
+    },
+    {
+      "id": "chicxulub_cratere",
+      "type": "fixe",
+      "valeur": "180",
+      "unite": "km",
+      "legende": "Cratère de Chicxulub, au Mexique",
+      "texte": "Le cratère de Chicxulub, au Mexique, mesure environ 180 km."
+    },
+    {
+      "id": "vredefort",
+      "type": "fixe",
+      "valeur": "300",
+      "unite": "km",
+      "legende": "Vredefort, plus grande structure d'impact sur Terre",
+      "texte": "Le dôme de Vredefort, en Afrique du Sud, mesure 300 km et date de 2 milliards d'années."
+    },
+    {
+      "id": "hoba",
+      "type": "fixe",
+      "valeur": "60",
+      "unite": "tonnes",
+      "legende": "Hoba, plus grosse météorite connue (Namibie)",
+      "texte": "La météorite de Hoba, en Namibie, pèse environ 60 tonnes d'un seul bloc."
+    },
+    {
+      "id": "meteorites_an",
+      "type": "fixe",
+      "valeur": "17 000",
+      "unite": "par an",
+      "legende": "Météorites de plus de 50 g tombant sur Terre",
+      "texte": "Environ 17 000 météorites de plus de 50 g tombent sur Terre chaque année."
+    },
+    {
+      "id": "meteoroides_vitesse",
+      "type": "fixe",
+      "valeur": "11",
+      "unite": "à 72 km/s",
+      "legende": "Vitesse d'entrée des météoroïdes",
+      "texte": "Les météoroïdes entrent dans l'atmosphère entre 11 et 72 km/s."
+    },
+    {
+      "id": "etoiles_filantes",
+      "type": "fixe",
+      "valeur": "80",
+      "unite": "à 120 km",
+      "legende": "Altitude où brillent les étoiles filantes",
+      "texte": "La plupart des étoiles filantes se consument entre 80 et 120 km d'altitude."
+    },
+    {
+      "id": "halley",
+      "type": "fixe",
+      "valeur": "76",
+      "unite": "ans",
+      "legende": "Période de la comète de Halley, de retour en 2061",
+      "texte": "La comète de Halley revient tous les 75 à 76 ans ; prochain passage en 2061."
+    },
+    {
+      "id": "cometes",
+      "type": "fixe",
+      "valeur": "4 000",
+      "unite": "et plus",
+      "legende": "Comètes connues dans le Système solaire",
+      "texte": "Plus de 4 000 comètes sont répertoriées."
+    },
+    {
+      "id": "queue_comete",
+      "type": "fixe",
+      "valeur": "100",
+      "unite": "millions de km",
+      "legende": "Longueur possible d'une queue de comète",
+      "texte": "La queue d'une grande comète peut s'étirer sur plus de 100 millions de km."
+    },
+    {
+      "id": "kuiper",
+      "type": "fixe",
+      "valeur": "30",
+      "unite": "à 50 UA",
+      "legende": "Ceinture de Kuiper, au-delà de Neptune",
+      "texte": "La ceinture de Kuiper s'étend surtout entre 30 et 50 fois la distance Terre-Soleil."
+    },
+    {
+      "id": "oort",
+      "type": "fixe",
+      "valeur": "100 000",
+      "unite": "UA",
+      "legende": "Le nuage d'Oort s'étendrait jusqu'à",
+      "texte": "Le nuage d'Oort, réservoir des comètes, s'étendrait de 2 000 à 100 000 fois la distance Terre-Soleil."
+    },
+    {
+      "id": "bennu",
+      "type": "fixe",
+      "valeur": "121,6",
+      "unite": "grammes",
+      "legende": "Échantillons de Bennu rapportés par OSIRIS-REx",
+      "texte": "La mission OSIRIS-REx a rapporté 121,6 g de l'astéroïde Bennu, un record."
+    },
+    {
+      "id": "ryugu",
+      "type": "fixe",
+      "valeur": "5,4",
+      "unite": "grammes",
+      "legende": "Échantillons de Ryugu rapportés par Hayabusa2",
+      "texte": "La sonde japonaise Hayabusa2 a rapporté 5,4 g de l'astéroïde Ryugu."
+    },
+    {
+      "id": "oumuamua",
+      "type": "fixe",
+      "valeur": "2017",
+      "unite": "année",
+      "legende": "Oumuamua, 1er objet interstellaire détecté",
+      "texte": "En 2017, Oumuamua est devenu le premier objet interstellaire repéré dans le Système solaire."
+    },
+    {
+      "id": "oumuamua_vitesse",
+      "type": "fixe",
+      "valeur": "26",
+      "unite": "km/s",
+      "legende": "Vitesse d'Oumuamua en arrivant",
+      "texte": "Oumuamua arrivait à 26 km/s avant d'être accéléré par le Soleil."
+    },
+    {
+      "id": "psyche",
+      "type": "fixe",
+      "valeur": "220",
+      "unite": "km",
+      "legende": "Psyché, astéroïde métallique visé par la NASA",
+      "texte": "L'astéroïde métallique Psyché mesure environ 220 km. Une sonde de la NASA est en route."
+    },
+    {
+      "id": "tcheliabinsk",
+      "type": "fixe",
+      "valeur": "20",
+      "unite": "mètres",
+      "legende": "Météore de Tcheliabinsk (2013)",
+      "texte": "Le météoroïde de Tcheliabinsk mesurait environ 20 m ; son explosion a libéré 30 fois l'énergie d'Hiroshima."
+    },
+    {
+      "id": "cai",
+      "type": "fixe",
+      "valeur": "4,567",
+      "unite": "milliards d'années",
+      "legende": "Âge des plus anciens solides du Système solaire",
+      "texte": "Les inclusions réfractaires des chondrites carbonées ont 4,567 milliards d'années."
+    },
+    {
+      "id": "toungouska",
+      "type": "fixe",
+      "valeur": "1908",
+      "unite": "année",
+      "legende": "Toungouska : 80 millions d'arbres couchés",
+      "texte": "En 1908, l'explosion de la Toungouska a couché 80 millions d'arbres sur 2 000 km² en Sibérie."
+    },
+    {
+      "id": "troyens",
+      "type": "fixe",
+      "valeur": "14 000",
+      "unite": "et plus",
+      "legende": "Astéroïdes troyens sur l'orbite de Jupiter",
+      "texte": "Plus de 14 000 astéroïdes troyens partagent l'orbite de Jupiter."
+    },
+    {
+      "id": "tchouri_albedo",
+      "type": "fixe",
+      "valeur": "6",
+      "unite": "%",
+      "legende": "Lumière renvoyée par la comète Tchouri",
+      "texte": "Le noyau de la comète Tchouri ne renvoie qu'environ 6 % de la lumière : il est noir comme du charbon."
+    },
+    {
+      "id": "proxima",
+      "type": "fixe",
+      "valeur": "4,24",
+      "unite": "a.-l.",
+      "legende": "Proxima du Centaure, étoile la plus proche",
+      "texte": "Proxima du Centaure, l'étoile la plus proche du Soleil, est à 4,24 années-lumière."
+    },
+    {
+      "id": "trappist",
+      "type": "fixe",
+      "valeur": "40",
+      "unite": "années-lumière",
+      "legende": "TRAPPIST-1 et ses 7 planètes rocheuses",
+      "texte": "Le système TRAPPIST-1 et ses 7 planètes de taille terrestre est à 40 années-lumière."
+    },
+    {
+      "id": "annee_lumiere",
+      "type": "fixe",
+      "valeur": "9 461",
+      "unite": "milliards de km",
+      "legende": "Une année-lumière",
+      "texte": "Une année-lumière vaut environ 9 461 milliards de km."
+    },
+    {
+      "id": "parsec",
+      "type": "fixe",
+      "valeur": "3,26",
+      "unite": "a.-l.",
+      "legende": "Un parsec, l'unité des astronomes",
+      "texte": "Un parsec vaut 3,26 années-lumière."
+    },
+    {
+      "id": "vitesse_lumiere",
+      "type": "fixe",
+      "valeur": "299 792",
+      "unite": "km/s",
+      "legende": "Vitesse de la lumière dans le vide",
+      "texte": "La lumière file à 299 792,458 km/s dans le vide."
+    },
+    {
+      "id": "voie_lactee_diametre",
+      "type": "fixe",
+      "valeur": "100 000",
+      "unite": "a.-l.",
+      "legende": "Diamètre du disque de la Voie lactée",
+      "texte": "Le disque de la Voie lactée mesure environ 100 000 années-lumière."
+    },
+    {
+      "id": "voie_lactee_epaisseur",
+      "type": "fixe",
+      "valeur": "1 000",
+      "unite": "a.-l.",
+      "legende": "Épaisseur du disque de la Voie lactée",
+      "texte": "Le disque d'étoiles de la Voie lactée ne fait qu'environ 1 000 années-lumière d'épaisseur."
+    },
+    {
+      "id": "centre_galactique",
+      "type": "fixe",
+      "valeur": "26 000",
+      "unite": "a.-l.",
+      "legende": "Distance du Soleil au centre de la Galaxie",
+      "texte": "Le Soleil est à environ 26 000 années-lumière du centre de la Voie lactée."
+    },
+    {
+      "id": "etoiles_voie_lactee",
+      "type": "fixe",
+      "valeur": "200",
+      "unite": "à 400 milliards",
+      "legende": "Étoiles dans la Voie lactée",
+      "texte": "La Voie lactée compterait 200 à 400 milliards d'étoiles."
+    },
+    {
+      "id": "sgr_a",
+      "type": "fixe",
+      "valeur": "4",
+      "unite": "millions de Soleils",
+      "legende": "Sagittarius A*, trou noir central",
+      "texte": "Le trou noir au centre de la Voie lactée pèse environ 4 millions de fois le Soleil."
+    },
+    {
+      "id": "andromede_distance",
+      "type": "fixe",
+      "valeur": "2,54",
+      "unite": "millions d'a.-l.",
+      "legende": "Andromède, le plus lointain visible à l'œil nu",
+      "texte": "La galaxie d'Andromède, à 2,54 millions d'années-lumière, est l'objet le plus lointain visible à l'œil nu."
+    },
+    {
+      "id": "andromede_etoiles",
+      "type": "fixe",
+      "valeur": "1 000",
+      "unite": "milliards d'étoiles",
+      "legende": "Étoiles de la galaxie d'Andromède",
+      "texte": "La galaxie d'Andromède compterait environ 1 000 milliards d'étoiles."
+    },
+    {
+      "id": "andromede_vitesse",
+      "type": "fixe",
+      "valeur": "110",
+      "unite": "km/s",
+      "legende": "Andromède se rapproche de nous",
+      "texte": "Andromède et la Voie lactée se rapprochent à environ 110 km/s."
+    },
+    {
+      "id": "andromede_fusion",
+      "type": "fixe",
+      "valeur": "50",
+      "unite": "%",
+      "legende": "Chance de fusion avec Andromède d'ici 10 Ga",
+      "texte": "Selon une étude de 2025 (Hubble et Gaia), il n'y a qu'environ 50 % de chances que la Voie lactée et Andromède fusionnent d'ici 10 milliards d'années."
+    },
+    {
+      "id": "groupe_local",
+      "type": "fixe",
+      "valeur": "80",
+      "unite": "galaxies et plus",
+      "legende": "Membres de notre Groupe local",
+      "texte": "Notre Groupe local compte plus de 80 galaxies."
+    },
+    {
+      "id": "groupe_local_taille",
+      "type": "fixe",
+      "valeur": "10",
+      "unite": "millions d'a.-l.",
+      "legende": "Diamètre du Groupe local",
+      "texte": "Le Groupe local mesure environ 10 millions d'années-lumière."
+    },
+    {
+      "id": "vierge",
+      "type": "fixe",
+      "valeur": "100",
+      "unite": "millions d'a.-l.",
+      "legende": "Étendue du superamas de la Vierge",
+      "texte": "Le superamas de la Vierge, qui contient notre Groupe local, s'étend sur environ 100 millions d'années-lumière."
+    },
+    {
+      "id": "laniakea",
+      "type": "fixe",
+      "valeur": "520",
+      "unite": "millions d'a.-l.",
+      "legende": "Laniakea, notre superamas de galaxies",
+      "texte": "Laniakea, le superamas qui englobe la Voie lactée, mesure environ 520 millions d'années-lumière."
+    },
+    {
+      "id": "m87_masse",
+      "type": "fixe",
+      "valeur": "6,5",
+      "unite": "milliards de Soleils",
+      "legende": "M87*, premier trou noir photographié",
+      "texte": "M87*, premier trou noir photographié en 2019, pèse 6,5 milliards de fois le Soleil."
+    },
+    {
+      "id": "m87_distance",
+      "type": "fixe",
+      "valeur": "55",
+      "unite": "millions d'a.-l.",
+      "legende": "Distance de la galaxie géante M87",
+      "texte": "La galaxie elliptique géante M87 est à 55 millions d'années-lumière."
+    },
+    {
+      "id": "etoile_neutrons",
+      "type": "fixe",
+      "valeur": "20",
+      "unite": "km",
+      "legende": "Taille typique d'une étoile à neutrons",
+      "texte": "Une étoile à neutrons concentre 1,4 à 2 masses solaires dans une boule de 10 à 20 km."
+    },
+    {
+      "id": "neutrons_cuillere",
+      "type": "fixe",
+      "valeur": "1",
+      "unite": "milliard de tonnes",
+      "legende": "Une cuillère à café d'étoile à neutrons",
+      "texte": "Une cuillère à café de matière d'étoile à neutrons pèserait environ un milliard de tonnes."
+    },
+    {
+      "id": "pulsar",
+      "type": "fixe",
+      "valeur": "716",
+      "unite": "tours par seconde",
+      "legende": "Rotation du pulsar le plus rapide connu",
+      "texte": "Le pulsar PSR J1748-2446ad tourne 716 fois par seconde."
+    },
+    {
+      "id": "betelgeuse",
+      "type": "fixe",
+      "valeur": "764",
+      "unite": "rayons solaires",
+      "legende": "Rayon de Bételgeuse (estimation 2020)",
+      "texte": "Selon une étude de 2020, Bételgeuse mesure environ 764 fois le rayon du Soleil : à sa place, elle engloutirait l'orbite de Mars."
+    },
+    {
+      "id": "sirius",
+      "type": "fixe",
+      "valeur": "8,6",
+      "unite": "années-lumière",
+      "legende": "Sirius, l'étoile la plus brillante du ciel",
+      "texte": "Sirius, l'étoile la plus brillante de notre ciel nocturne, est à 8,6 années-lumière."
+    },
+    {
+      "id": "temperatures_etoiles",
+      "type": "fixe",
+      "valeur": "3 000",
+      "unite": "à 50 000 °C",
+      "legende": "Températures de surface des étoiles",
+      "texte": "La surface des étoiles va d'environ 3 000 °C pour les naines rouges à 50 000 °C pour les géantes bleues."
+    },
+    {
+      "id": "masse_minimale",
+      "type": "fixe",
+      "valeur": "0,08",
+      "unite": "masse solaire",
+      "legende": "Masse minimale d'une étoile",
+      "texte": "En dessous de 0,08 masse solaire, pas de fusion durable de l'hydrogène : c'est une naine brune."
+    },
+    {
+      "id": "chandrasekhar",
+      "type": "fixe",
+      "valeur": "1,44",
+      "unite": "masse solaire",
+      "legende": "Limite de Chandrasekhar des naines blanches",
+      "texte": "Au-delà de 1,44 masse solaire, une naine blanche s'effondre."
+    },
+    {
+      "id": "crabe_annee",
+      "type": "fixe",
+      "valeur": "1054",
+      "unite": "année",
+      "legende": "Supernova à l'origine de la nébuleuse du Crabe",
+      "texte": "La nébuleuse du Crabe est le reste d'une supernova observée en 1054."
+    },
+    {
+      "id": "crabe_distance",
+      "type": "fixe",
+      "valeur": "6 500",
+      "unite": "a.-l.",
+      "legende": "Distance de la nébuleuse du Crabe",
+      "texte": "La nébuleuse du Crabe est à environ 6 500 années-lumière."
+    },
+    {
+      "id": "orion",
+      "type": "fixe",
+      "valeur": "1 344",
+      "unite": "a.-l.",
+      "legende": "Nébuleuse d'Orion, pouponnière d'étoiles",
+      "texte": "La grande nébuleuse d'Orion, pouponnière d'étoiles la plus proche, est à 1 344 années-lumière."
+    },
+    {
+      "id": "omega_centauri",
+      "type": "fixe",
+      "valeur": "10",
+      "unite": "millions d'étoiles",
+      "legende": "Oméga du Centaure, plus gros amas globulaire",
+      "texte": "Oméga du Centaure, le plus gros amas globulaire de la Voie lactée, compte environ 10 millions d'étoiles."
+    },
+    {
+      "id": "amas_globulaires",
+      "type": "fixe",
+      "valeur": "13",
+      "unite": "milliards d'années",
+      "legende": "Âge des plus vieux amas globulaires",
+      "texte": "Les plus vieux amas globulaires de la Voie lactée ont environ 13 milliards d'années."
+    },
+    {
+      "id": "hypervelocite",
+      "type": "fixe",
+      "valeur": "3",
+      "unite": "millions de km/h",
+      "legende": "Étoiles éjectées du centre galactique",
+      "texte": "Certaines étoiles, éjectées par le trou noir central, filent à environ 3 millions de km/h."
+    },
+    {
+      "id": "gaia",
+      "type": "fixe",
+      "valeur": "1,8",
+      "unite": "milliard d'étoiles",
+      "legende": "Étoiles cataloguées par le satellite Gaia",
+      "texte": "Le satellite européen Gaia a catalogué environ 1,8 milliard d'étoiles."
+    },
+    {
+      "id": "naines_rouges",
+      "type": "fixe",
+      "valeur": "75",
+      "unite": "%",
+      "legende": "Part des étoiles qui sont des naines rouges",
+      "texte": "Environ 75 % des étoiles sont de petites naines rouges."
+    },
+    {
+      "id": "age_univers",
+      "type": "fixe",
+      "valeur": "13,8",
+      "unite": "milliards d'années",
+      "legende": "Âge de l'Univers",
+      "texte": "L'Univers a 13,8 milliards d'années."
+    },
+    {
+      "id": "univers_observable",
+      "type": "fixe",
+      "valeur": "93",
+      "unite": "milliards d'a.-l.",
+      "legende": "Diamètre de l'Univers observable",
+      "texte": "Grâce à l'expansion, l'Univers observable mesure environ 93 milliards d'années-lumière."
+    },
+    {
+      "id": "fond_diffus",
+      "type": "fixe",
+      "valeur": "2,725",
+      "unite": "kelvins",
+      "legende": "Température du fond diffus cosmologique",
+      "texte": "Le rayonnement fossile du Big Bang est à 2,725 K, soit -270,4 °C."
+    },
+    {
+      "id": "recombinaison",
+      "type": "fixe",
+      "valeur": "380 000",
+      "unite": "ans",
+      "legende": "Âge de l'Univers quand la lumière s'est libérée",
+      "texte": "380 000 ans après le Big Bang, la lumière a enfin pu voyager librement."
+    },
+    {
+      "id": "matiere_ordinaire",
+      "type": "fixe",
+      "valeur": "5",
+      "unite": "%",
+      "legende": "Part de la matière ordinaire dans l'Univers",
+      "texte": "La matière ordinaire, celle des étoiles et de nous, ne représente qu'environ 5 % de l'Univers."
+    },
+    {
+      "id": "matiere_noire",
+      "type": "fixe",
+      "valeur": "27",
+      "unite": "%",
+      "legende": "Part de la matière noire dans l'Univers",
+      "texte": "La matière noire représenterait environ 27 % de l'Univers."
+    },
+    {
+      "id": "energie_noire",
+      "type": "fixe",
+      "valeur": "68",
+      "unite": "%",
+      "legende": "Part de l'énergie noire dans l'Univers",
+      "texte": "L'énergie noire, qui accélère l'expansion, représenterait environ 68 % de l'Univers."
+    },
+    {
+      "id": "hubble_tension",
+      "type": "fixe",
+      "valeur": "67",
+      "unite": "à 73 km/s/Mpc",
+      "legende": "Constante de Hubble : les mesures divergent",
+      "texte": "Selon les méthodes, l'expansion de l'Univers est mesurée entre 67 et 73 km/s par mégaparsec : c'est la « tension de Hubble »."
+    },
+    {
+      "id": "ondes_grav",
+      "type": "fixe",
+      "valeur": "2015",
+      "unite": "année",
+      "legende": "Première détection d'ondes gravitationnelles",
+      "texte": "En 2015, les détecteurs LIGO ont capté pour la première fois des ondes gravitationnelles."
+    },
+    {
+      "id": "gw150914_distance",
+      "type": "fixe",
+      "valeur": "1,3",
+      "unite": "milliard d'a.-l.",
+      "legende": "Distance de la 1re fusion de trous noirs captée",
+      "texte": "La fusion de trous noirs à l'origine du premier signal, GW150914, a eu lieu à 1,3 milliard d'années-lumière."
+    },
+    {
+      "id": "gw150914_energie",
+      "type": "fixe",
+      "valeur": "3",
+      "unite": "masses solaires",
+      "legende": "Masse changée en ondes gravitationnelles",
+      "texte": "Lors de GW150914, l'équivalent de 3 masses solaires a été converti en ondes gravitationnelles."
+    },
+    {
+      "id": "constellations",
+      "type": "fixe",
+      "valeur": "88",
+      "unite": "constellations",
+      "legende": "Constellations officielles de l'UAI",
+      "texte": "L'Union astronomique internationale découpe le ciel en 88 constellations."
+    },
+    {
+      "id": "messier",
+      "type": "fixe",
+      "valeur": "110",
+      "unite": "objets",
+      "legende": "Catalogue de Messier, de M1 à M110",
+      "texte": "Le catalogue de Charles Messier compte 110 objets du ciel profond."
+    },
+    {
+      "id": "ngc",
+      "type": "fixe",
+      "valeur": "7 840",
+      "unite": "objets",
+      "legende": "Objets du catalogue NGC",
+      "texte": "Le New General Catalogue recense 7 840 nébuleuses, amas et galaxies."
+    },
+    {
+      "id": "etoiles_visibles",
+      "type": "fixe",
+      "valeur": "6 000",
+      "unite": "à 9 000",
+      "legende": "Étoiles visibles à l'œil nu sur tout le ciel",
+      "texte": "Sous un ciel parfaitement noir, on voit 6 000 à 9 000 étoiles à l'œil nu sur l'ensemble du ciel."
+    },
+    {
+      "id": "magnitude_limite",
+      "type": "fixe",
+      "valeur": "6,5",
+      "unite": "magnitude",
+      "legende": "Étoiles les plus faibles visibles à l'œil nu",
+      "texte": "Sous un ciel sans pollution lumineuse, l'œil voit jusqu'à la magnitude 6,5."
+    },
+    {
+      "id": "magnitude_soleil",
+      "type": "fixe",
+      "valeur": "-26,74",
+      "unite": "magnitude",
+      "legende": "Éclat du Soleil vu de la Terre",
+      "texte": "Vu de la Terre, le Soleil brille à la magnitude -26,74."
+    },
+    {
+      "id": "magnitude_lune",
+      "type": "fixe",
+      "valeur": "-12,74",
+      "unite": "magnitude",
+      "legende": "Éclat moyen de la pleine Lune",
+      "texte": "La pleine Lune brille en moyenne à la magnitude -12,74."
+    },
+    {
+      "id": "magnitude_venus",
+      "type": "fixe",
+      "valeur": "-4,9",
+      "unite": "magnitude",
+      "legende": "Éclat maximal de Vénus",
+      "texte": "Au mieux, Vénus atteint la magnitude -4,9 : l'astre le plus brillant après le Soleil et la Lune."
+    },
+    {
+      "id": "magnitude_sirius",
+      "type": "fixe",
+      "valeur": "-1,46",
+      "unite": "magnitude",
+      "legende": "Éclat de Sirius",
+      "texte": "Sirius, l'étoile la plus brillante du ciel, brille à la magnitude -1,46."
+    },
+    {
+      "id": "magnitudes_100",
+      "type": "fixe",
+      "valeur": "100",
+      "unite": "fois",
+      "legende": "Écart d'éclat pour 5 magnitudes",
+      "texte": "Un écart de 5 magnitudes correspond à un éclat 100 fois plus faible ou plus fort."
+    },
+    {
+      "id": "taille_lune",
+      "type": "fixe",
+      "valeur": "0,5",
+      "unite": "degré",
+      "legende": "Taille apparente de la Lune et du Soleil",
+      "texte": "La pleine Lune et le Soleil mesurent chacun environ un demi-degré dans le ciel."
+    },
+    {
+      "id": "jwst_miroir",
+      "type": "fixe",
+      "valeur": "6,5",
+      "unite": "mètres",
+      "legende": "Miroir du télescope James Webb",
+      "texte": "Le miroir du télescope James Webb mesure 6,5 m et compte 18 segments hexagonaux."
+    },
+    {
+      "id": "l2",
+      "type": "fixe",
+      "valeur": "1,5",
+      "unite": "million de km",
+      "legende": "Distance du point L2, où orbite Webb",
+      "texte": "Les télescopes James Webb et Euclid orbitent autour du point L2, à 1,5 million de km de la Terre."
+    },
+    {
+      "id": "hubble_miroir",
+      "type": "fixe",
+      "valeur": "2,4",
+      "unite": "mètres",
+      "legende": "Miroir du télescope Hubble (1990)",
+      "texte": "Le télescope spatial Hubble, lancé en 1990, a un miroir de 2,4 m."
+    },
+    {
+      "id": "elt",
+      "type": "fixe",
+      "valeur": "39,3",
+      "unite": "mètres",
+      "legende": "Miroir de l'ELT européen, au Chili",
+      "texte": "Le futur Extremely Large Telescope européen, au Chili, aura un miroir de 39,3 m."
+    },
+    {
+      "id": "gtc",
+      "type": "fixe",
+      "valeur": "10,4",
+      "unite": "mètres",
+      "legende": "Gran Telescopio Canarias, à La Palma",
+      "texte": "Le Gran Telescopio Canarias, à La Palma, a un miroir segmenté de 10,4 m."
+    },
+    {
+      "id": "fast",
+      "type": "fixe",
+      "valeur": "500",
+      "unite": "mètres",
+      "legende": "FAST, plus grande antenne radio à parabole unique",
+      "texte": "Le radiotélescope chinois FAST a une antenne de 500 m, la plus grande parabole unique au monde."
+    },
+    {
+      "id": "adaptation_oeil",
+      "type": "fixe",
+      "valeur": "20",
+      "unite": "à 30 minutes",
+      "legende": "Temps d'adaptation de l'œil à l'obscurité",
+      "texte": "Il faut 20 à 30 minutes pour que l'œil s'adapte pleinement à l'obscurité."
+    },
+    {
+      "id": "bortle",
+      "type": "fixe",
+      "valeur": "9",
+      "unite": "classes",
+      "legende": "Échelle de Bortle de la qualité du ciel",
+      "texte": "L'échelle de Bortle classe le ciel nocturne de 1, ciel noir parfait, à 9, centre-ville."
+    },
+    {
+      "id": "h_alpha",
+      "type": "fixe",
+      "valeur": "656,28",
+      "unite": "nm",
+      "legende": "Raie H-alpha, le rouge des nébuleuses",
+      "texte": "La raie de l'hydrogène H-alpha, à 656,28 nm, donne leur couleur rouge aux nébuleuses."
+    },
+    {
+      "id": "oiii",
+      "type": "fixe",
+      "valeur": "500,7",
+      "unite": "nm",
+      "legende": "Raie de l'oxygène [O III], vert-bleu",
+      "texte": "La raie de l'oxygène [O III], à 500,7 nm, colore en bleu-vert les nébuleuses planétaires."
+    },
+    {
+      "id": "mom_z14",
+      "type": "fixe",
+      "valeur": "280",
+      "unite": "millions d'années",
+      "legende": "MoM-z14, galaxie la plus lointaine confirmée",
+      "texte": "Le télescope James Webb voit la galaxie MoM-z14 telle qu'elle était 280 millions d'années après le Big Bang."
+    },
+    {
+      "id": "vie",
+      "type": "fixe",
+      "valeur": "1",
+      "unite": "planète",
+      "legende": "Planète connue abritant la vie : la Terre",
+      "texte": "À ce jour, une seule planète est connue pour abriter la vie : la Terre."
+    }
   ]
 }

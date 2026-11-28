@@ -310,6 +310,8 @@ def calculer_chiffre(item: dict, jour: dt.date, total_exo: int | None) -> dict:
         mois = (jour - dt.date.fromisoformat(item["depuis"])).days / 30.4375
         valeur, unite = nombre_fr(total_exo / mois, 0), "par mois"
         texte = item["texte"].format(valeur=valeur)
+    elif t == "fixe":
+        valeur, unite, texte = item["valeur"], item.get("unite", ""), item["texte"]
     else:
         raise ValueError(f"type inconnu {t}")
     return {"date": jour.isoformat(), "id": item["id"], "valeur": valeur, "unite": unite,

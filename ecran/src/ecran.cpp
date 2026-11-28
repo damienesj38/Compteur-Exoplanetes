@@ -1,114 +1,140 @@
 #include "ecran.h"
 
 #include <Arduino.h>
+#include <esp_lcd_panel_ops.h>
+#include <esp_lcd_panel_rgb.h>
+#include <freertos/semphr.h>
 
 #include "board_pins.h"
 
-LGFX ecran;
-lgfx::LGFX_Sprite canevas(&ecran);
-
-LGFX::LGFX() {
-    {
-        auto cfg = bus_.config();
-        cfg.panel = &panel_;
-        cfg.pin_d0 = board::LCD_B0;
-        cfg.pin_d1 = board::LCD_B1;
-        cfg.pin_d2 = board::LCD_B2;
-        cfg.pin_d3 = board::LCD_B3;
-        cfg.pin_d4 = board::LCD_B4;
-        cfg.pin_d5 = board::LCD_G0;
-        cfg.pin_d6 = board::LCD_G1;
-        cfg.pin_d7 = board::LCD_G2;
-        cfg.pin_d8 = board::LCD_G3;
-        cfg.pin_d9 = board::LCD_G4;
-        cfg.pin_d10 = board::LCD_G5;
-        cfg.pin_d11 = board::LCD_R0;
-        cfg.pin_d12 = board::LCD_R1;
-        cfg.pin_d13 = board::LCD_R2;
-        cfg.pin_d14 = board::LCD_R3;
-        cfg.pin_d15 = board::LCD_R4;
-        cfg.pin_henable = board::LCD_DE;
-        cfg.pin_vsync = board::LCD_VSYNC;
-        cfg.pin_hsync = board::LCD_HSYNC;
-        cfg.pin_pclk = board::LCD_PCLK;
-        cfg.freq_write = board::LCD_PCLK_HZ;
-        cfg.hsync_polarity = board::LCD_HSYNC_POLARITY;
-        cfg.hsync_front_porch = board::LCD_HSYNC_FRONT_PORCH;
-        cfg.hsync_pulse_width = board::LCD_HSYNC_PULSE_WIDTH;
-        cfg.hsync_back_porch = board::LCD_HSYNC_BACK_PORCH;
-        cfg.vsync_polarity = board::LCD_VSYNC_POLARITY;
-        cfg.vsync_front_porch = board::LCD_VSYNC_FRONT_PORCH;
-        cfg.vsync_pulse_width = board::LCD_VSYNC_PULSE_WIDTH;
-        cfg.vsync_back_porch = board::LCD_VSYNC_BACK_PORCH;
-        cfg.pclk_idle_high = board::LCD_PCLK_IDLE_HIGH;
-        bus_.config(cfg);
-    }
-    {
-        auto cfg = panel_.config();
-        cfg.memory_width = board::LCD_WIDTH;
-        cfg.memory_height = board::LCD_HEIGHT;
-        cfg.panel_width = board::LCD_WIDTH;
-        cfg.panel_height = board::LCD_HEIGHT;
-        cfg.offset_x = 0;
-        cfg.offset_y = 0;
-        panel_.config(cfg);
-    }
-    panel_.setBus(&bus_);
-    setPanel(&panel_);
-}
-
-void LGFX::reglerSignal(uint32_t horlogeHz, int polarite) {
-    auto cfg = bus_.config();
-    cfg.freq_write = horlogeHz;
-    cfg.hsync_polarity = polarite;
-    cfg.vsync_polarity = polarite;
-    bus_.config(cfg);
-}
+lgfx::LGFX_Sprite canevas;
 
 namespace {
+
+constexpr int L = board::LCD_WIDTH;
+constexpr int H = board::LCD_HEIGHT;
+constexpr int LIGNES_TAMPON = 10;  // tampon intermédiaire de 10 lignes, comme Elecrow
+
+esp_lcd_panel_handle_t panneau = nullptr;
+uint16_t* images[2] = {nullptr, nullptr};
+int imageAffichee = 0;
+SemaphoreHandle_t semVsync = nullptr;
+
+bool surVsync(esp_lcd_panel_handle_t, const esp_lcd_rgb_panel_event_data_t*, void*) {
+    BaseType_t reveil = pdFALSE;
+    xSemaphoreGiveFromISR(semVsync, &reveil);
+    return reveil == pdTRUE;
+}
+
 struct ReglageAffichage {
     uint32_t hz;
-    int polarite;
+    bool synchroReposBas;
     const char* nom;
 };
 #if CROWPANEL_ADVANCE_REV >= 130
-// n°1 = exemple PlatformIO d'Elecrow pour les V1.3 à V1.5.
+// n°1 = exemple ESP-IDF d'Elecrow pour les V1.3 à V1.5.
 const ReglageAffichage REGLAGES[] = {
-    {18000000, 1, "18 MHz, synchro 1"},
-    {16000000, 0, "16 MHz, synchro 0"},
-    {18000000, 0, "18 MHz, synchro 0"},
-    {16000000, 1, "16 MHz, synchro 1"},
-    {21000000, 1, "21 MHz, synchro 1"},
-    {21000000, 0, "21 MHz, synchro 0"},
+    {16000000, false, "16 MHz, synchro A"},
+    {16000000, true, "16 MHz, synchro B"},
+    {18000000, false, "18 MHz, synchro A"},
+    {14000000, false, "14 MHz, synchro A"},
 };
 #else
 const ReglageAffichage REGLAGES[] = {
-    {board::LCD_PCLK_HZ, 0, "21 MHz, synchro 0"},
+    {board::LCD_PCLK_HZ, true, "21 MHz, synchro B"},
 };
 #endif
 constexpr int NB_REGLAGES = sizeof(REGLAGES) / sizeof(REGLAGES[0]);
+
+const ReglageAffichage& reglage(int n) { return REGLAGES[(n % NB_REGLAGES + NB_REGLAGES) % NB_REGLAGES]; }
+
 }  // namespace
 
 int nombreReglagesAffichage() { return NB_REGLAGES; }
-const char* nomReglageAffichage(int n) { return REGLAGES[(n % NB_REGLAGES + NB_REGLAGES) % NB_REGLAGES].nom; }
+const char* nomReglageAffichage(int n) { return reglage(n).nom; }
 
-bool initEcran(int reglage) {
-    const ReglageAffichage& r = REGLAGES[(reglage % NB_REGLAGES + NB_REGLAGES) % NB_REGLAGES];
-    ecran.reglerSignal(r.hz, r.polarite);
-    if (!ecran.init()) {
-        Serial.println("ecran: init() a échoué");
+bool initEcran(int n) {
+    const ReglageAffichage& r = reglage(n);
+    semVsync = xSemaphoreCreateBinary();
+
+    esp_lcd_rgb_panel_config_t cfg = {};
+    cfg.clk_src = LCD_CLK_SRC_DEFAULT;
+    cfg.timings.pclk_hz = r.hz;
+    cfg.timings.h_res = L;
+    cfg.timings.v_res = H;
+    cfg.timings.hsync_pulse_width = board::LCD_HSYNC_PULSE_WIDTH;
+    cfg.timings.hsync_back_porch = board::LCD_HSYNC_BACK_PORCH;
+    cfg.timings.hsync_front_porch = board::LCD_HSYNC_FRONT_PORCH;
+    cfg.timings.vsync_pulse_width = board::LCD_VSYNC_PULSE_WIDTH;
+    cfg.timings.vsync_back_porch = board::LCD_VSYNC_BACK_PORCH;
+    cfg.timings.vsync_front_porch = board::LCD_VSYNC_FRONT_PORCH;
+    cfg.timings.flags.hsync_idle_low = r.synchroReposBas;
+    cfg.timings.flags.vsync_idle_low = r.synchroReposBas;
+    cfg.timings.flags.pclk_active_neg = 1;
+    cfg.data_width = 16;
+    cfg.bits_per_pixel = 16;
+    cfg.num_fbs = 2;
+    cfg.bounce_buffer_size_px = L * LIGNES_TAMPON;
+    cfg.dma_burst_size = 64;
+    cfg.hsync_gpio_num = board::LCD_HSYNC;
+    cfg.vsync_gpio_num = board::LCD_VSYNC;
+    cfg.de_gpio_num = board::LCD_DE;
+    cfg.pclk_gpio_num = board::LCD_PCLK;
+    cfg.disp_gpio_num = -1;
+    const int donnees[16] = {board::LCD_B0, board::LCD_B1, board::LCD_B2, board::LCD_B3, board::LCD_B4,
+                             board::LCD_G0, board::LCD_G1, board::LCD_G2, board::LCD_G3, board::LCD_G4,
+                             board::LCD_G5, board::LCD_R0, board::LCD_R1, board::LCD_R2, board::LCD_R3,
+                             board::LCD_R4};
+    for (int i = 0; i < 16; ++i) cfg.data_gpio_nums[i] = donnees[i];
+    cfg.flags.fb_in_psram = 1;
+
+    if (esp_lcd_new_rgb_panel(&cfg, &panneau) != ESP_OK) {
+        Serial.println("ecran: esp_lcd_new_rgb_panel a échoué");
         return false;
     }
-    ecran.setColorDepth(16);
-    ecran.fillScreen(TFT_BLACK);
+    esp_lcd_rgb_panel_event_callbacks_t rappels = {};
+    rappels.on_vsync = surVsync;
+    esp_lcd_rgb_panel_register_event_callbacks(panneau, &rappels, nullptr);
+    esp_lcd_panel_reset(panneau);
+    esp_lcd_panel_init(panneau);
+    void* fb0 = nullptr;
+    void* fb1 = nullptr;
+    if (esp_lcd_rgb_panel_get_frame_buffer(panneau, 2, &fb0, &fb1) != ESP_OK) {
+        Serial.println("ecran: images introuvables");
+        return false;
+    }
+    images[0] = static_cast<uint16_t*>(fb0);
+    images[1] = static_cast<uint16_t*>(fb1);
+    memset(images[0], 0, L * H * 2);
+    memset(images[1], 0, L * H * 2);
+    imageAffichee = 0;
+
     canevas.setPsram(true);
     canevas.setColorDepth(16);
-    if (!canevas.createSprite(board::LCD_WIDTH, board::LCD_HEIGHT)) {
+    if (!canevas.createSprite(L, H)) {
         Serial.println("ecran: pas assez de PSRAM pour le canevas (vérifier « OPI PSRAM »)");
         return false;
     }
-    Serial.printf("ecran: %dx%d, %s\n", board::LCD_WIDTH, board::LCD_HEIGHT, r.nom);
+    Serial.printf("ecran: %dx%d, %s, tampon %d lignes\n", L, H, r.nom, LIGNES_TAMPON);
     return true;
 }
 
-void afficher() { canevas.pushSprite(0, 0); }
+void afficher() {
+    if (!panneau) return;
+    const int arriere = 1 - imageAffichee;
+    // Le canevas LovyanGFX range ses pixels RGB565 octets inversés : on les remet
+    // dans l'ordre attendu par l'écran en recopiant dans l'image cachée.
+    const uint32_t* src = static_cast<const uint32_t*>(canevas.getBuffer());
+    uint32_t* dst = reinterpret_cast<uint32_t*>(images[arriere]);
+    for (int i = 0; i < L * H / 2; ++i) {
+        const uint32_t x = src[i];
+        dst[i] = ((x & 0x00FF00FFu) << 8) | ((x >> 8) & 0x00FF00FFu);
+    }
+    // Bascule vers cette image au début de la prochaine trame.
+    xSemaphoreTake(semVsync, 0);
+    esp_lcd_panel_draw_bitmap(panneau, 0, 0, L, H, images[arriere]);
+    // Attendre que la bascule ait eu lieu avant de réécrire dans l'autre image.
+    xSemaphoreTake(semVsync, pdMS_TO_TICKS(100));
+    xSemaphoreTake(semVsync, pdMS_TO_TICKS(100));
+    imageAffichee = arriere;
+}

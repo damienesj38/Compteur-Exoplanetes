@@ -14,7 +14,7 @@
     ]
   },
   "firmware": {
-    "version": "1.0.3",
+    "version": "1.0.5",
     "url": "https://damienesj38.github.io/Compteur-Exoplanetes/firmware/compteur-{rev}.bin"
   }
 }
