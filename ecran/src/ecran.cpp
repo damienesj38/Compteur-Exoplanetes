@@ -13,7 +13,7 @@ namespace {
 
 constexpr int L = board::LCD_WIDTH;
 constexpr int H = board::LCD_HEIGHT;
-constexpr int LIGNES_TAMPON = 10;  // tampon intermédiaire de 10 lignes, comme Elecrow
+int lignesTampon = 20;  // tampon intermédiaire (Elecrow : 10 lignes), ramené à 10 si la mémoire manque
 
 esp_lcd_panel_handle_t panneau = nullptr;
 uint16_t* images[2] = {nullptr, nullptr};
@@ -32,12 +32,14 @@ struct ReglageAffichage {
     const char* nom;
 };
 #if CROWPANEL_ADVANCE_REV >= 130
-// n°1 = exemple ESP-IDF d'Elecrow pour les V1.3 à V1.5.
+// Essais sur une V1.5 (28/11/2026) : 13, 14 et 16 MHz font sauter le bas de
+// l'image, 18 MHz va mieux. La dalle semble vouloir une fréquence d'image plus
+// élevée : on teste donc au-dessus de 18 MHz.
 const ReglageAffichage REGLAGES[] = {
-    {16000000, false, "16 MHz, synchro A"},
-    {16000000, true, "16 MHz, synchro B"},
-    {18000000, false, "18 MHz, synchro A"},
-    {14000000, false, "14 MHz, synchro A"},
+    {18000000, false, "18 MHz"},
+    {21000000, false, "21 MHz"},
+    {24000000, false, "24 MHz"},
+    {27000000, false, "27 MHz"},
 };
 #else
 const ReglageAffichage REGLAGES[] = {
@@ -74,7 +76,7 @@ bool initEcran(int n) {
     cfg.data_width = 16;
     cfg.bits_per_pixel = 16;
     cfg.num_fbs = 2;
-    cfg.bounce_buffer_size_px = L * LIGNES_TAMPON;
+    cfg.bounce_buffer_size_px = L * lignesTampon;
     cfg.dma_burst_size = 64;
     cfg.hsync_gpio_num = board::LCD_HSYNC;
     cfg.vsync_gpio_num = board::LCD_VSYNC;
@@ -89,8 +91,12 @@ bool initEcran(int n) {
     cfg.flags.fb_in_psram = 1;
 
     if (esp_lcd_new_rgb_panel(&cfg, &panneau) != ESP_OK) {
-        Serial.println("ecran: esp_lcd_new_rgb_panel a échoué");
-        return false;
+        lignesTampon = 10;
+        cfg.bounce_buffer_size_px = L * lignesTampon;
+        if (esp_lcd_new_rgb_panel(&cfg, &panneau) != ESP_OK) {
+            Serial.println("ecran: esp_lcd_new_rgb_panel a échoué");
+            return false;
+        }
     }
     esp_lcd_rgb_panel_event_callbacks_t rappels = {};
     rappels.on_vsync = surVsync;
@@ -115,7 +121,7 @@ bool initEcran(int n) {
         Serial.println("ecran: pas assez de PSRAM pour le canevas (vérifier « OPI PSRAM »)");
         return false;
     }
-    Serial.printf("ecran: %dx%d, %s, tampon %d lignes\n", L, H, r.nom, LIGNES_TAMPON);
+    Serial.printf("ecran: %dx%d, %s, tampon %d lignes\n", L, H, r.nom, lignesTampon);
     return true;
 }
 
