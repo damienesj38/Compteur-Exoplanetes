@@ -64,9 +64,9 @@ struct Meteo {
 };
 
 struct Reglages {
-    std::string ville = "Tencin";
-    double lat = 45.31;
-    double lon = 5.96;
+    std::string ville = "Paris";
+    double lat = 48.86;
+    double lon = 2.35;
 };
 
 // État de l'interface.

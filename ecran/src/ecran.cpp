@@ -1,6 +1,7 @@
 #include "ecran.h"
 
 #include <Arduino.h>
+#include <algorithm>
 #include <esp_lcd_panel_ops.h>
 #include <esp_lcd_panel_rgb.h>
 #include <freertos/semphr.h>
@@ -20,7 +21,7 @@ uint16_t* images[2] = {nullptr, nullptr};
 int imageAffichee = 0;
 SemaphoreHandle_t semVsync = nullptr;
 
-bool surVsync(esp_lcd_panel_handle_t, const esp_lcd_rgb_panel_event_data_t*, void*) {
+IRAM_ATTR bool surVsync(esp_lcd_panel_handle_t, const esp_lcd_rgb_panel_event_data_t*, void*) {
     BaseType_t reveil = pdFALSE;
     xSemaphoreGiveFromISR(semVsync, &reveil);
     return reveil == pdTRUE;
@@ -36,9 +37,9 @@ struct ReglageAffichage {
 // l'image, 18 MHz va mieux. La dalle semble vouloir une fréquence d'image plus
 // élevée : on teste donc au-dessus de 18 MHz.
 const ReglageAffichage REGLAGES[] = {
-    {18000000, false, "18 MHz"},
     {21000000, false, "21 MHz"},
     {24000000, false, "24 MHz"},
+    {18000000, false, "18 MHz"},
     {27000000, false, "27 MHz"},
 };
 #else
@@ -132,9 +133,16 @@ void afficher() {
     // dans l'ordre attendu par l'écran en recopiant dans l'image cachée.
     const uint32_t* src = static_cast<const uint32_t*>(canevas.getBuffer());
     uint32_t* dst = reinterpret_cast<uint32_t*>(images[arriere]);
-    for (int i = 0; i < L * H / 2; ++i) {
-        const uint32_t x = src[i];
-        dst[i] = ((x & 0x00FF00FFu) << 8) | ((x >> 8) & 0x00FF00FFu);
+    // Copie par tranches de 40 lignes, avec une courte pause entre chacune, pour ne
+    // pas monopoliser la PSRAM pendant que l'écran lit l'image affichée.
+    constexpr int TRANCHE = L * 40 / 2;
+    for (int debut = 0; debut < L * H / 2; debut += TRANCHE) {
+        const int fin = std::min(debut + TRANCHE, L * H / 2);
+        for (int i = debut; i < fin; ++i) {
+            const uint32_t x = src[i];
+            dst[i] = ((x & 0x00FF00FFu) << 8) | ((x >> 8) & 0x00FF00FFu);
+        }
+        vTaskDelay(1);
     }
     // Bascule vers cette image au début de la prochaine trame.
     xSemaphoreTake(semVsync, 0);

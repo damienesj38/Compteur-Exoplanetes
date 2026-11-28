@@ -37,9 +37,9 @@ int main() {
     d.total = 8540;
     d.majCatalogue = "2026-11-21";
     d.nouvelles24h = 1;
-    d.chiffreValeur = "25,9";
-    d.chiffreUnite = "milliards de km";
-    d.chiffreLegende = "Voyager 1 · distance";
+    d.chiffreValeur = "99,86";
+    d.chiffreUnite = "%";
+    d.chiffreLegende = "Part de la masse du Système solaire dans le Soleil";
     auto L = [&](int i, const char* f, const char* m, const char* lieu, const char* st, time_t t) {
         d.lancements[i] = {f, m, lieu, st, t};
     };
@@ -49,7 +49,7 @@ int main() {
     d.nbLancements = 3;
 
     Reglages r;
-    r.ville = "Tencin";
+    r.ville = "Lyon";
 
     // Météo : seeing/transparence réels de 7Timer (prévision du 23/11 00 h UTC) ;
     // valeurs Météo-France illustratives (non récupérables depuis l'atelier).
