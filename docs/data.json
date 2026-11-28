@@ -1,6 +1,6 @@
 {
  "version_format": 1,
- "genere_le": "2026-11-27T23:28:20Z",
+ "genere_le": "2026-11-28T07:50:48Z",
  "exoplanetes": {
   "total": 8739,
   "libelle": "Objets extrasolaires confirmés",
@@ -71,7 +71,7 @@
    "fusee_complete": "Falcon 9 Block 5",
    "mission": "USSF-380",
    "operateur": "SpaceX",
-   "net": "2026-11-29T04:39:00Z",
+   "net": "2026-11-29T04:39:03Z",
    "statut": "Go",
    "statut_fr": "Feu vert",
    "pas_de_tir": "Space Launch Complex 4E",
