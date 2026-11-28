@@ -91,7 +91,36 @@ void reglerLuminosite() {
 
 // ------------------------------------------------------------------ Wi-Fi et ville
 
+// Le réseau et son mot de passe sont rangés dans la mémoire de l'écran (Preferences),
+// pour se reconnecter seul après une coupure de courant. Ils ne quittent jamais l'écran.
+bool connecterReseauConnu(const String& ssid, const String& mdp, uint32_t delaiMs) {
+    WiFi.persistent(false);
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(ssid.c_str(), mdp.c_str());
+    const uint32_t t0 = millis();
+    while (WiFi.status() != WL_CONNECTED && millis() - t0 < delaiMs) delay(250);
+    return WiFi.status() == WL_CONNECTED;
+}
+
 void configurerWifi() {
+    const String ssidConnu = prefs.getString("wifi_ssid", "");
+    const String mdpConnu = prefs.getString("wifi_mdp", "");
+
+    // 1. Réseau déjà connu : on insiste environ 2 minutes, le temps qu'une box
+    //    redémarre après une coupure de courant.
+    if (!ssidConnu.isEmpty()) {
+        const int ESSAIS = 6;
+        for (int essai = 1; essai <= ESSAIS; ++essai) {
+            std::string ligne2 = essai == 1 ? "Patiente quelques secondes."
+                                            : "Nouvel essai " + std::to_string(essai) + "/" + std::to_string(ESSAIS) + "…";
+            message("Connexion au Wi-Fi…", {std::string("Réseau « ") + ssidConnu.c_str() + " »", ligne2});
+            if (connecterReseauConnu(ssidConnu, mdpConnu, 20000)) return;
+            WiFi.disconnect(true);
+            delay(1000);
+        }
+    }
+
+    // 2. Premier démarrage, ou réseau introuvable : page de configuration.
     WiFi.mode(WIFI_STA);
     WiFiManager wm;
     String villeActuelle = prefs.getString("ville", "");
@@ -102,7 +131,9 @@ void configurerWifi() {
     wm.setClass("invert");
     std::vector<const char*> menu = {"wifi", "exit"};
     wm.setMenu(menu);
-    wm.setConfigPortalTimeout(0);
+    // Réseau déjà connu mais absent (box en panne, coupure) : la page reste ouverte
+    // 5 minutes, puis l'écran redémarre et réessaie le réseau connu.
+    wm.setConfigPortalTimeout(ssidConnu.isEmpty() ? 0 : 300);
     wm.setConnectTimeout(20);
     wm.setAPCallback([](WiFiManager*) {
         ecranConfiguration(canevas, NOM_WIFI_CONFIG);
@@ -111,6 +142,14 @@ void configurerWifi() {
 
     message("Connexion au Wi-Fi…", {"Patiente quelques secondes."});
     if (!wm.autoConnect(NOM_WIFI_CONFIG)) ESP.restart();
+
+    // Mémoriser le réseau qui vient de fonctionner.
+    const String ssid = WiFi.SSID();
+    const String mdp = WiFi.psk();
+    if (!ssid.isEmpty() && (ssid != ssidConnu || mdp != mdpConnu)) {
+        prefs.putString("wifi_ssid", ssid);
+        prefs.putString("wifi_mdp", mdp);
+    }
 
     String villeSaisie = champVille.getValue();
     villeSaisie.trim();
@@ -252,6 +291,8 @@ void gestes() {
             prefs.remove("nom");
             prefs.remove("lat");
             prefs.remove("lon");
+            prefs.remove("wifi_ssid");
+            prefs.remove("wifi_mdp");
             delay(1500);
             ESP.restart();
         } else if (dansY && xDernier >= BOUTON_NON_X && xDernier <= BOUTON_NON_X + BOUTON_L) {
