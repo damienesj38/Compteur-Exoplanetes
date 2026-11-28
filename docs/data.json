@@ -1,6 +1,6 @@
 {
  "version_format": 1,
- "genere_le": "2026-11-28T09:43:07Z",
+ "genere_le": "2026-11-28T10:03:23Z",
  "exoplanetes": {
   "total": 8739,
   "libelle": "Objets extrasolaires confirmés",
@@ -123,7 +123,7 @@
   }
  ],
  "firmware": {
-  "version": "1.0.5",
+  "version": "1.0.6",
   "url": "https://damienesj38.github.io/Compteur-Exoplanetes/firmware/compteur-{rev}.bin"
  },
  "alertes": []
