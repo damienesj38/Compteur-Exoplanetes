@@ -56,3 +56,4 @@ void pointsPage(Canevas& c, int cx, int cy, int page);
 void iconeWifi(Canevas& c, int x, int y, uint32_t couleur);
 void iconeFusee(Canevas& c, int x, int y, uint32_t couleur);
 void iconeHorloge(Canevas& c, int x, int y, uint32_t couleur);
+void iconeEngrenage(Canevas& c, int cx, int cy, uint32_t couleur, uint32_t fond);

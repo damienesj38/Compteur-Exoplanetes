@@ -440,3 +440,12 @@ void iconeHorloge(Canevas& c, int x, int y, uint32_t col) {
     c.drawWideLine(x + 9, y + 9, x + 9, y + 5, 0.9f, C(col));
     c.drawWideLine(x + 9, y + 9, x + 12, y + 11, 0.9f, C(col));
 }
+
+void iconeEngrenage(Canevas& c, int cx, int cy, uint32_t col, uint32_t fond) {
+    for (int i = 0; i < 8; ++i) {
+        const float a = i * M_PI / 4;
+        c.fillSmoothCircle(cx + std::cos(a) * 9.0f, cy + std::sin(a) * 9.0f, 2.6f, C(col));
+    }
+    c.fillSmoothCircle(cx, cy, 8, C(col));
+    c.fillSmoothCircle(cx, cy, 3.5f, C(fond));
+}

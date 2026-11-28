@@ -70,8 +70,19 @@ struct Reglages {
 };
 
 // État de l'interface.
+// Réglages choisis sur l'écran (page Réglages), gardés en mémoire.
+struct PrefsUtilisateur {
+    int lumJour = 100;         // %
+    int lumNuit = 35;          // %, 0 = écran éteint la nuit
+    int nuitDebut = 22;        // heure locale
+    int nuitFin = 7;           // heure locale ; égale au début = pas de mode nuit
+    bool alerte = true;        // alerte « nouvelle exoplanète »
+    int affichage = 0;         // réglage du signal vidéo (voir ecran.cpp)
+};
+
 struct EtatEcran {
     int page = 0;              // 0 accueil, 1 compteur, 2 météo
+    bool reglages = false;     // page Réglages ouverte
     bool alerte = false;       // page 2 en mode « nouvelle exoplanète »
     bool clignote = false;     // phase du clignotement de l'alerte
     bool wifiOk = false;

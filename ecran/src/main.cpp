@@ -3,11 +3,13 @@
 // Page 1 : accueil (météo de la nuit, compteur, Lune, chiffre du jour, heure, prochain lancement)
 // Page 2 : compteur seul, avec l'alerte « nouvelle exoplanète »
 // Page 3 : météo heure par heure, jour et nuit
-// On passe d'une page à l'autre en balayant l'écran. Un appui de 5 secondes permet de
-// changer de Wi-Fi ou de ville.
+// On passe d'une page à l'autre en balayant l'écran. La roue dentée de l'accueil ouvre
+// les réglages (luminosité, mode nuit, alerte, affichage, Wi-Fi et ville). Un appui de
+// 5 secondes permet aussi de changer de Wi-Fi ou de ville.
 
 #include <Arduino.h>
 #include <Preferences.h>
+#include <algorithm>
 #include <cmath>
 #include <vector>
 #include <WiFi.h>
@@ -32,6 +34,10 @@ DonneesCompteur donnees;
 Meteo meteo;
 Reglages reglages;
 EtatEcran etat;
+PrefsUtilisateur pu;
+int affichageAuDemarrage = 0;
+uint32_t tReveil = 0;           // écran rallumé un instant la nuit (luminosité 0)
+bool reveilActif = false;
 
 uint32_t tDonnees = 0, tMeteo = 0, tAstro = 0, tInteraction = 0, tAlerte = 0, tClignote = 0, tWifi = 0;
 bool premiereDonnees = true, premiereMeteo = true, premiereAstro = true;
@@ -47,13 +53,34 @@ int16_t xDepart = 0, yDepart = 0, xDernier = 0, yDernier = 0;
 uint32_t tDepart = 0;
 
 bool heureCalme(time_t maintenant) {
-    int h = heureLocale(maintenant, meteo.decalageUtc).tm_hour;
-    return h >= HEURE_DEBUT_NUIT || h < HEURE_FIN_NUIT;
+    if (pu.nuitDebut == pu.nuitFin) return false;
+    const int h = heureLocale(maintenant, meteo.decalageUtc).tm_hour;
+    return pu.nuitDebut < pu.nuitFin ? (h >= pu.nuitDebut && h < pu.nuitFin) : (h >= pu.nuitDebut || h < pu.nuitFin);
+}
+
+std::string fmtDuree(uint32_t ms) {
+    const uint32_t min = ms / 60000;
+    if (min < 1) return "à l'instant";
+    if (min < 60) return "il y a " + std::to_string(min) + " min";
+    return "il y a " + std::to_string(min / 60) + " h " + std::to_string(min % 60);
+}
+
+void dessinerReglages() {
+    std::string infos1 = std::string("Version " FW_VERSION " · carte ") +
+                         (CROWPANEL_ADVANCE_REV >= 130 ? "V1.3 à V1.5" : "V1.2") + " · Wi-Fi « " +
+                         std::string(WiFi.SSID().c_str()) + " » · " + reglages.ville;
+    std::string infos2 = donnees.recuLe > 0 ? "Données reçues " + fmtDuree(1000UL * (time(nullptr) - donnees.recuLe)) +
+                                          " · mises à jour automatiques du programme activées"
+                                    : std::string("Données pas encore reçues");
+    char nom[40];
+    snprintf(nom, sizeof nom, "n°%d · %s", pu.affichage + 1, nomReglageAffichage(pu.affichage));
+    ecranReglages(canevas, pu, nom, pu.affichage != affichageAuDemarrage, infos1, infos2);
 }
 
 void dessiner() {
     const time_t maintenant = time(nullptr);
     if (menuReinit) ecranReinitialisation(canevas);
+    else if (etat.reglages) dessinerReglages();
     else if (etat.page == 0) pageAccueil(canevas, donnees, meteo, reglages, maintenant, etat);
     else if (etat.page == 1) pageCompteur(canevas, donnees, meteo, maintenant, etat);
     else pageMeteo(canevas, meteo, reglages, maintenant);
@@ -82,11 +109,83 @@ void finirAlerte() {
 }
 
 void reglerLuminosite() {
-    int l = heureCalme(time(nullptr)) ? LUMINOSITE_NUIT : LUMINOSITE_JOUR;
+    int l = heureCalme(time(nullptr)) ? pu.lumNuit : pu.lumJour;
+    if (reveilActif) l = std::max(l, 30);
     if (l != derniereLuminosite) {
         panel_mcu::backlightLevel(static_cast<uint8_t>(l));
         derniereLuminosite = l;
     }
+}
+
+void chargerPrefs() {
+    pu.lumJour = prefs.getInt("lum_jour", LUMINOSITE_JOUR);
+    pu.lumNuit = prefs.getInt("lum_nuit", LUMINOSITE_NUIT);
+    pu.nuitDebut = prefs.getInt("nuit_deb", HEURE_DEBUT_NUIT);
+    pu.nuitFin = prefs.getInt("nuit_fin", HEURE_FIN_NUIT);
+    pu.alerte = prefs.getBool("alerte", true);
+    pu.affichage = prefs.getInt("affichage4", 0) % nombreReglagesAffichage();
+    affichageAuDemarrage = pu.affichage;
+}
+
+void ouvrirReglages() {
+    etat.reglages = true;
+    aRedessiner = true;
+}
+
+void fermerReglages() {
+    etat.reglages = false;
+    derniereLuminosite = -1;
+    reglerLuminosite();
+    aRedessiner = true;
+    if (pu.affichage != affichageAuDemarrage) {
+        message("Nouveau réglage d'affichage", {"Redémarrage pour l'appliquer."}, coul::ORANGE);
+        delay(1200);
+        ESP.restart();
+    }
+}
+
+// Applique un appui sur la page Réglages.
+void toucherReglages(int x, int y) {
+    const int z = zoneReglages(x, y);
+    if (z == Z_AUCUNE) return;
+    if (z == Z_RETOUR) { fermerReglages(); return; }
+    if (z == Z_WIFI) { etat.reglages = false; menuReinit = true; aRedessiner = true; return; }
+    if (z == Z_ALERTE) {
+        pu.alerte = !pu.alerte;
+        prefs.putBool("alerte", pu.alerte);
+        if (!pu.alerte) alerteEnAttente = false;
+        aRedessiner = true;
+        return;
+    }
+    const int ligne = z >= Z_PLUS ? z - Z_PLUS : z - Z_MOINS;
+    const int sens = z >= Z_PLUS ? 1 : -1;
+    switch (ligne) {
+        case 0:
+            pu.lumJour = std::min(100, std::max(10, pu.lumJour + 10 * sens));
+            prefs.putInt("lum_jour", pu.lumJour);
+            panel_mcu::backlightLevel(pu.lumJour);  // aperçu immédiat
+            derniereLuminosite = pu.lumJour;
+            break;
+        case 1:
+            pu.lumNuit = std::min(100, std::max(0, pu.lumNuit + (pu.lumNuit < 10 || (pu.lumNuit == 10 && sens < 0) ? 5 : 10) * sens));
+            prefs.putInt("lum_nuit", pu.lumNuit);
+            panel_mcu::backlightLevel(std::max(pu.lumNuit, 5));  // aperçu (jamais tout noir ici)
+            derniereLuminosite = -1;
+            break;
+        case 2:
+            pu.nuitDebut = (pu.nuitDebut + sens + 24) % 24;
+            prefs.putInt("nuit_deb", pu.nuitDebut);
+            break;
+        case 3:
+            pu.nuitFin = (pu.nuitFin + sens + 24) % 24;
+            prefs.putInt("nuit_fin", pu.nuitFin);
+            break;
+        case 5:
+            pu.affichage = (pu.affichage + sens + nombreReglagesAffichage()) % nombreReglagesAffichage();
+            prefs.putInt("affichage4", pu.affichage);
+            break;
+    }
+    aRedessiner = true;
 }
 
 // ------------------------------------------------------------------ Wi-Fi et ville
@@ -195,7 +294,7 @@ void majDonnees() {
     aRedessiner = true;
     const time_t maintenant = time(nullptr);
     if (donnees.total != VALEUR_ABSENTE) {
-        if (dernierTotalVu != VALEUR_ABSENTE && donnees.total > dernierTotalVu) {
+        if (pu.alerte && dernierTotalVu != VALEUR_ABSENTE && donnees.total > dernierTotalVu) {
             if (heureCalme(maintenant)) alerteEnAttente = true;
             else demarrerAlerte();
         }
@@ -301,8 +400,26 @@ void gestes() {
         }
         return;
     }
+    const bool appuiCourt = abs(dx) < 25 && abs(dy) < 25 && t - tDepart < 800;
+    // La nuit, écran éteint (luminosité 0) : un toucher le rallume une minute.
+    if (heureCalme(time(nullptr)) && pu.lumNuit == 0 && !reveilActif) {
+        reveilActif = true;
+        tReveil = t;
+        derniereLuminosite = -1;
+        reglerLuminosite();
+        return;
+    }
+    if (reveilActif) tReveil = t;
+    if (etat.reglages) {
+        if (appuiCourt) toucherReglages(xDernier, yDernier);
+        return;
+    }
     if (etat.alerte) {  // un toucher arrête l'alerte
         finirAlerte();
+        return;
+    }
+    if (appuiCourt && etat.page == 0 && toucheEngrenage(xDernier, yDernier)) {
+        ouvrirReglages();
         return;
     }
     if (abs(dx) > 90 && abs(dx) > abs(dy)) {
@@ -322,38 +439,15 @@ void setup() {
     panel_mcu::begin();
     initPolices();
     prefs.begin("compteur", false);
-    const int reglageAffichage = prefs.getInt("affichage4", 0) % nombreReglagesAffichage();
-    if (!initEcran(reglageAffichage)) {
+    chargerPrefs();
+    if (!initEcran(pu.affichage)) {
         delay(5000);
         ESP.restart();
     }
     message("Compteur d'exoplanètes", {"Démarrage… (version " FW_VERSION ")"});
     delay(200);  // laisser l'horloge de l'écran se stabiliser avant d'allumer
-    panel_mcu::backlightOn();
+    panel_mcu::backlightLevel(pu.lumJour);
     initTactile();
-
-    // Réglage de l'affichage : toucher l'écran au démarrage passe au réglage suivant.
-    if (nombreReglagesAffichage() > 1) {
-        message("Compteur d'exoplanètes",
-                {"Démarrage… (version " FW_VERSION ")",
-                 std::string("Affichage n°") + std::to_string(reglageAffichage + 1) + " sur " +
-                     std::to_string(nombreReglagesAffichage()) + " : " + nomReglageAffichage(reglageAffichage),
-                 "Image qui saute ? Touche l'écran maintenant pour essayer le réglage suivant."});
-        const uint32_t t0 = millis();
-        while (millis() - t0 < 5000) {
-            lireTactile();
-            if (tactileAppuye()) {
-                const int suivant = (reglageAffichage + 1) % nombreReglagesAffichage();
-                prefs.putInt("affichage4", suivant);
-                message("Changement d'affichage…",
-                        {std::string("Essai du réglage n°") + std::to_string(suivant + 1) + " : " + nomReglageAffichage(suivant),
-                         "Redémarrage."}, coul::ORANGE);
-                delay(1500);
-                ESP.restart();
-            }
-            delay(20);
-        }
-    }
 
     dernierTotalVu = prefs.getInt("total", VALEUR_ABSENTE);
     meteo.decalageUtc = prefs.getInt("decalage", 3600);
@@ -385,9 +479,15 @@ void loop() {
         if (t - tAlerte > DUREE_ALERTE) finirAlerte();
     } else if (alerteEnAttente && !heureCalme(maintenant)) {
         demarrerAlerte();
-    } else if (etat.page != 0 && !menuReinit && t - tInteraction > RETOUR_ACCUEIL) {
+    } else if ((etat.page != 0 || etat.reglages) && !menuReinit && t - tInteraction > RETOUR_ACCUEIL) {
+        if (etat.reglages) fermerReglages();
         etat.page = 0;
         aRedessiner = true;
+    }
+    if (reveilActif && t - tReveil > 60000) {
+        reveilActif = false;
+        derniereLuminosite = -1;
+        reglerLuminosite();
     }
 
     const int minute = heureLocale(maintenant, meteo.decalageUtc).tm_min;

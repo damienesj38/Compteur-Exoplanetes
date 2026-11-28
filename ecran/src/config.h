@@ -3,7 +3,7 @@
 
 #include "board_pins.h"
 
-#define FW_VERSION "1.0.7"
+#define FW_VERSION "1.1.0"
 
 // Fichier publié chaque heure par le dépôt GitHub (compteur, chiffre du jour, lancements).
 #define URL_DONNEES "https://damienesj38.github.io/Compteur-Exoplanetes/data.json"

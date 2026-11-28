@@ -100,6 +100,18 @@ int main() {
     ecranConfiguration(c, "Compteur-Exoplanetes");
     enregistrer(c, "ecran_configuration");
     ecranReinitialisation(c);
+    enregistrer(c, "reinit_tmp");
+    {
+        PrefsUtilisateur pu;
+        ecranReglages(c, pu, "n°1 · 21 MHz", false,
+                      "Version 1.1.0 · carte V1.3 à V1.5 · Wi-Fi « Livebox-1234 » · Lyon",
+                      "Données reçues il y a 4 min · mises à jour automatiques du programme activées");
+        enregistrer(c, "reglages");
+        pu.lumNuit = 0; pu.alerte = false; pu.nuitDebut = pu.nuitFin = 7;
+        ecranReglages(c, pu, "n°2 · 24 MHz", true, "Version 1.1.0", "Données pas encore reçues");
+        enregistrer(c, "reglages2");
+    }
+    ecranReinitialisation(c);
     enregistrer(c, "ecran_reinitialisation");
     ecranMiseAJour(c, 42, "1.0.1");
     enregistrer(c, "ecran_mise_a_jour");

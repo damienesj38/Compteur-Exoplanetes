@@ -212,6 +212,7 @@ void pageAccueil(Canevas& c, const DonneesCompteur& d, const Meteo& m, const Reg
     }
     etiquette(c, ligneDate, 400, 422, B15, coul::VERT, espD, CENTRE);
     pointsPage(c, 400, 456, 0);
+    iconeEngrenage(c, ENGRENAGE_X, ENGRENAGE_Y, coul::GRIS_FONCE, coul::FOND);
 
     // --- Prochain lancement
     iconeFusee(c, 588, 344, coul::CORAIL);
@@ -445,4 +446,63 @@ void ecranMiseAJour(Canevas& c, int pourcent, const std::string& version) {
     c.fillSmoothRoundRect(200, 320, 400, 18, 9, C(coul::CASE));
     if (pourcent > 0) c.fillSmoothRoundRect(200, 320, std::max(18, 4 * std::min(100, pourcent)), 18, 9, C(coul::CYAN));
     texte(c, std::to_string(pourcent) + " %", 400, 350, S17, coul::GRIS, CENTRE);
+}
+
+namespace {
+void boutonReglage(Canevas& c, int x, int y, int l, int h, const std::string& lib, uint32_t fond, Police p = B24) {
+    c.fillSmoothRoundRect(x, y, l, h, 8, C(fond));
+    texte(c, lib, x + l / 2, y + (h - (p == B24 ? 24 : 18)) / 2 - 1, p, coul::BLANC, CENTRE);
+}
+}  // namespace
+
+int zoneReglages(int x, int y) {
+    for (int i = 0; i < REG_LIGNES; ++i) {
+        const int y0 = REG_Y0 + i * REG_PAS;
+        if (y < y0 - 4 || y > y0 + REG_H + 4) continue;
+        if (i == 4) return (x >= REG_MOINS_X - 6 && x <= REG_MOINS_X + REG_BASCULE_L + 6) ? Z_ALERTE : Z_AUCUNE;
+        if (x >= REG_MOINS_X - 8 && x <= REG_MOINS_X + REG_BTN_L + 4) return Z_MOINS + i;
+        if (x >= REG_PLUS_X - 4 && x <= REG_PLUS_X + REG_BTN_L + 8) return Z_PLUS + i;
+        return Z_AUCUNE;
+    }
+    if (y >= REG_BAS_Y - 4 && y <= REG_BAS_Y + REG_BAS_H + 4) {
+        if (x >= REG_WIFI_X && x <= REG_WIFI_X + REG_WIFI_L) return Z_WIFI;
+        if (x >= REG_RETOUR_X && x <= REG_RETOUR_X + REG_RETOUR_L) return Z_RETOUR;
+    }
+    return Z_AUCUNE;
+}
+
+void ecranReglages(Canevas& c, const PrefsUtilisateur& p, const std::string& nomAffichage, bool redemarrage,
+                   const std::string& infos1, const std::string& infos2) {
+    c.fillScreen(C(coul::FOND));
+    etiquette(c, "RÉGLAGES", 40, 20, B18, coul::CYAN, 3);
+    iconeEngrenage(c, 22, 30, coul::CYAN, coul::FOND);
+    const bool sansNuit = p.nuitDebut == p.nuitFin;
+    auto pct = [](int v) { return std::to_string(v) + " %"; };
+    const std::string lignes[REG_LIGNES][2] = {
+        {"Luminosité le jour", pct(p.lumJour)},
+        {"Luminosité la nuit", p.lumNuit == 0 ? std::string("Éteint") : pct(p.lumNuit)},
+        {"Début du mode nuit", sansNuit ? std::string("Aucun") : std::to_string(p.nuitDebut) + " h"},
+        {"Fin du mode nuit", sansNuit ? std::string("Aucune") : std::to_string(p.nuitFin) + " h"},
+        {"Alerte « nouvelle exoplanète »", ""},
+        {"Affichage (si l'image saute)", nomAffichage},
+    };
+    for (int i = 0; i < REG_LIGNES; ++i) {
+        const int y = REG_Y0 + i * REG_PAS;
+        c.fillSmoothRoundRect(24, y, 752, REG_H, 8, C(coul::CASE));
+        texte(c, lignes[i][0], 40, y + 11, S17, coul::BLANC);
+        if (i == 4) {
+            boutonReglage(c, REG_MOINS_X, y + 3, REG_BASCULE_L, REG_H - 6, p.alerte ? "Activée" : "Désactivée",
+                          p.alerte ? 0x1E6B45 : 0x5A2A2A, S17);
+            continue;
+        }
+        texte(c, lignes[i][1], REG_MOINS_X - 20, y + 9, B24, coul::CYAN, DROITE);
+        boutonReglage(c, REG_MOINS_X, y + 3, REG_BTN_L, REG_H - 6, "−", 0x1F3A5C);
+        boutonReglage(c, REG_PLUS_X, y + 3, REG_BTN_L, REG_H - 6, "+", 0x1F3A5C);
+    }
+    if (redemarrage)
+        texte(c, "L'écran redémarrera en quittant les réglages.", 40, REG_Y0 + 5 * REG_PAS + REG_H + 2, S14, coul::ORANGE);
+    boutonReglage(c, REG_WIFI_X, REG_BAS_Y, REG_WIFI_L, REG_BAS_H, "Changer de Wi-Fi ou de ville", 0x5A3417, S17);
+    boutonReglage(c, REG_RETOUR_X, REG_BAS_Y, REG_RETOUR_L, REG_BAS_H, "Retour", 0x1E6B45, S17);
+    texteLimite(c, infos1, 40, 434, 720, S14, coul::GRIS);
+    texteLimite(c, infos2, 40, 454, 720, S14, coul::GRIS_FONCE);
 }
