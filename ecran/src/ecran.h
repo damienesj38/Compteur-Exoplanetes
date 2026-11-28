@@ -11,6 +11,7 @@
 class LGFX : public lgfx::LGFX_Device {
   public:
     LGFX();
+    void reglerSignal(uint32_t horlogeHz, int polarite);  // avant init()
 
   private:
     lgfx::Bus_RGB bus_;
@@ -20,5 +21,9 @@ class LGFX : public lgfx::LGFX_Device {
 extern LGFX ecran;
 extern lgfx::LGFX_Sprite canevas;
 
-bool initEcran();
+// Réglages du signal vidéo à essayer (horloge pixel, polarité des synchros).
+int nombreReglagesAffichage();
+const char* nomReglageAffichage(int n);
+
+bool initEcran(int reglage = 0);
 void afficher();  // copie le canevas à l'écran

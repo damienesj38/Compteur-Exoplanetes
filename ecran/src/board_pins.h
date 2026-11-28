@@ -69,10 +69,10 @@ constexpr int LCD_HEIGHT = 480;
 // Elecrow LOWERED the pixel clock between V1.2 and V1.3. Read verbatim from
 // their three driver files. This single fact reconciles most of the
 // contradictory advice in circulation.
-// v1.0.2 : 16 MHz faisait sauter le bas de l'image sur une V1.5 (la PSRAM ne suit
-// pas toujours). 13 MHz donne environ 32 images/s, largement suffisant ici.
+// Valeur indicative : pour les V1.3 et suivantes, le réglage réellement utilisé
+// est choisi dans la liste REGLAGES d'ecran.cpp (13 MHz testé en 1.0.2 : pire).
 #if CROWPANEL_ADVANCE_REV >= 130
-constexpr uint32_t LCD_PCLK_HZ = 13000000;
+constexpr uint32_t LCD_PCLK_HZ = 18000000;
 #else
 constexpr uint32_t LCD_PCLK_HZ = 21000000;
 #endif

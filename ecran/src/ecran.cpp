@@ -57,7 +57,44 @@ LGFX::LGFX() {
     setPanel(&panel_);
 }
 
-bool initEcran() {
+void LGFX::reglerSignal(uint32_t horlogeHz, int polarite) {
+    auto cfg = bus_.config();
+    cfg.freq_write = horlogeHz;
+    cfg.hsync_polarity = polarite;
+    cfg.vsync_polarity = polarite;
+    bus_.config(cfg);
+}
+
+namespace {
+struct ReglageAffichage {
+    uint32_t hz;
+    int polarite;
+    const char* nom;
+};
+#if CROWPANEL_ADVANCE_REV >= 130
+// n°1 = exemple PlatformIO d'Elecrow pour les V1.3 à V1.5.
+const ReglageAffichage REGLAGES[] = {
+    {18000000, 1, "18 MHz, synchro 1"},
+    {16000000, 0, "16 MHz, synchro 0"},
+    {18000000, 0, "18 MHz, synchro 0"},
+    {16000000, 1, "16 MHz, synchro 1"},
+    {21000000, 1, "21 MHz, synchro 1"},
+    {21000000, 0, "21 MHz, synchro 0"},
+};
+#else
+const ReglageAffichage REGLAGES[] = {
+    {board::LCD_PCLK_HZ, 0, "21 MHz, synchro 0"},
+};
+#endif
+constexpr int NB_REGLAGES = sizeof(REGLAGES) / sizeof(REGLAGES[0]);
+}  // namespace
+
+int nombreReglagesAffichage() { return NB_REGLAGES; }
+const char* nomReglageAffichage(int n) { return REGLAGES[(n % NB_REGLAGES + NB_REGLAGES) % NB_REGLAGES].nom; }
+
+bool initEcran(int reglage) {
+    const ReglageAffichage& r = REGLAGES[(reglage % NB_REGLAGES + NB_REGLAGES) % NB_REGLAGES];
+    ecran.reglerSignal(r.hz, r.polarite);
     if (!ecran.init()) {
         Serial.println("ecran: init() a échoué");
         return false;
@@ -70,8 +107,7 @@ bool initEcran() {
         Serial.println("ecran: pas assez de PSRAM pour le canevas (vérifier « OPI PSRAM »)");
         return false;
     }
-    Serial.printf("ecran: %dx%d, horloge pixel %u Hz\n", board::LCD_WIDTH, board::LCD_HEIGHT,
-                  static_cast<unsigned>(board::LCD_PCLK_HZ));
+    Serial.printf("ecran: %dx%d, %s\n", board::LCD_WIDTH, board::LCD_HEIGHT, r.nom);
     return true;
 }
 

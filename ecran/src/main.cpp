@@ -321,7 +321,9 @@ void setup() {
     Wire.begin(board::I2C_SDA, board::I2C_SCL, board::I2C_HZ);
     panel_mcu::begin();
     initPolices();
-    if (!initEcran()) {
+    prefs.begin("compteur", false);
+    const int reglageAffichage = prefs.getInt("affichage", 0) % nombreReglagesAffichage();
+    if (!initEcran(reglageAffichage)) {
         delay(5000);
         ESP.restart();
     }
@@ -330,7 +332,29 @@ void setup() {
     panel_mcu::backlightOn();
     initTactile();
 
-    prefs.begin("compteur", false);
+    // Réglage de l'affichage : toucher l'écran au démarrage passe au réglage suivant.
+    if (nombreReglagesAffichage() > 1) {
+        message("Compteur d'exoplanètes",
+                {"Démarrage… (version " FW_VERSION ")",
+                 std::string("Affichage n°") + std::to_string(reglageAffichage + 1) + " sur " +
+                     std::to_string(nombreReglagesAffichage()) + " : " + nomReglageAffichage(reglageAffichage),
+                 "Image qui saute ? Touche l'écran maintenant pour essayer le réglage suivant."});
+        const uint32_t t0 = millis();
+        while (millis() - t0 < 5000) {
+            lireTactile();
+            if (tactileAppuye()) {
+                const int suivant = (reglageAffichage + 1) % nombreReglagesAffichage();
+                prefs.putInt("affichage", suivant);
+                message("Changement d'affichage…",
+                        {std::string("Essai du réglage n°") + std::to_string(suivant + 1) + " : " + nomReglageAffichage(suivant),
+                         "Redémarrage."}, coul::ORANGE);
+                delay(1500);
+                ESP.restart();
+            }
+            delay(20);
+        }
+    }
+
     dernierTotalVu = prefs.getInt("total", VALEUR_ABSENTE);
     meteo.decalageUtc = prefs.getInt("decalage", 3600);
 
